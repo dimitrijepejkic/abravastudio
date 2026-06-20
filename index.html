@@ -1,41 +1,74 @@
 <!DOCTYPE html>
-
-<html lang="en">
+<html lang="sr">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abrava Studio</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>ABRAVA STUDIO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-
-
-
-
 </head>
 
 <body>
+    <!-- Background layers -->
+    <div class="bg-layer bg-grid" id="bgGrid"></div>
+    <div class="bg-layer bg-pixels" id="bgPixels"></div>
+    <div class="bg-layer scanlines" id="bgScan"></div>
 
+    <!-- Loading overlay -->
+    <div id="loader" class="loader-wrap" aria-hidden="false">
+        <div style="text-align:center">
+            <div class="badge">🚀 Website Under Construction</div>
+            <div style="height:12px"></div>
+            <div class="loading-text">LOADING ASSETS</div>
+        </div>
 
-    <div class="container">
+        <div class="loading-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div id="progress" class="loading-progress">
+                <div class="shimmer"></div>
+            </div>
+        </div>
+
+        <div class="loading-text" id="percent">0%</div>
+    </div>
+
+    <!-- Sound toggle (starts off; audio context created/resumed only after user gesture) -->
+    <button id="soundToggle" class="sound-toggle" title="Click to enable sound" aria-pressed="false">🔈</button>
+
+    <!-- Main content -->
+    <main class="container" id="mainContent"
+        style="opacity:0;transform:translateY(8px);transition:opacity .6s ease,transform .6s ease;">
         <div class="badge">🚀 Website Under Construction</div>
 
-        <h1>Abrava Studio</h1>
+        <h1 class="logo" id="logo">
+            <span class="a-green">A</span><span class="brava">BRAVA</span>
+            <span class="studio">STUDIO</span>
+        </h1>
 
-        <p>
+        <p class="lead">
             We're currently building something awesome.
             Our website is under development and will be launching soon.
             Stay tuned for updates.
         </p>
 
+        <!-- Larger mini loader (no pixel sprite, no underline) -->
+        <div class="pixel-block" id="pixelBlock">
+            <div class="mini-loader large" role="status" aria-label="Asset progress">
+                <div class="mini-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                    <div class="mini-fill" aria-hidden="true"></div>
+                    <div class="mini-shimmer" aria-hidden="true"></div>
+                </div>
+                <div class="mini-percent" aria-live="polite">0%</div>
+            </div>
+        </div>
+
         <div class="contact">
             Contact:
-            <a href="mailto:contact@abravastudio.com">
-                contact@abravastudio.com
-            </a>
+            <a href="mailto:contact@abravastudio.com">contact@abravastudio.com</a>
         </div>
-    </div>
+    </main>
 
-
+    <script src="js/main.js"></script>
 </body>
 
 </html>
