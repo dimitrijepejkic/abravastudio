@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="sr">
+<html lang="en">
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ABRAVA STUDIO</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <meta name="google-site-verification" content="0D7fX-FABBsAbKcizjknBjjTlo7DCY9p9ReYR4rPC20" />
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -17,9 +18,8 @@
 
     <!-- Loading overlay -->
     <div id="loader" class="loader-wrap" aria-hidden="false">
-        <div style="text-align:center">
+        <div style="text-align:center;">
             <div class="badge">🚀 Website Under Construction</div>
-            <div style="height:12px"></div>
             <div class="loading-text">LOADING ASSETS</div>
         </div>
 
@@ -32,8 +32,6 @@
         <div class="loading-text" id="percent">0%</div>
     </div>
 
-    <!-- Sound toggle (starts off; audio context created/resumed only after user gesture) -->
-    <button id="soundToggle" class="sound-toggle" title="Click to enable sound" aria-pressed="false">🔈</button>
 
     <!-- Main content -->
     <main class="container" id="mainContent"
@@ -66,6 +64,32 @@
             Contact:
             <a href="mailto:contact@abravastudio.com">contact@abravastudio.com</a>
         </div>
+        <label for="email" class="newsletter-label">
+            Subscribe to our newsletter:
+        </label>
+        <form id="newsletterForm" novalidate>
+
+            <div class="newsletter-row">
+                <input type="email" id="email" name="email" placeholder="Email" autocomplete="email" maxlength="254"
+                    required>
+                <button type="submit" class="newsletter-button">
+                    Subscribe
+                </button>
+            </div>
+
+            <small id="emailError" class="error-message"></small>
+        </form>
+
+
+        <div class="discord-section">
+            <a href="https://discord.gg/tvojInviteLink" target="_blank" class="discord-link">
+                <span class="discord-icon"> <img src="images/discord-round-color-icon.webp" alt="Discord" /></span>
+                <span class="discord-text">Join our Discord server</span>
+            </a>
+        </div>
+
+
+
     </main>
 
     <script src="js/main.js"></script>

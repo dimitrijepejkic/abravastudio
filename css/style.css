@@ -171,33 +171,6 @@ body {
     margin-top: 8px;
 }
 
-/* Sound toggle */
-.sound-toggle {
-    position: fixed;
-    right: 18px;
-    bottom: 18px;
-    z-index: 9998;
-    width: 44px;
-    height: 44px;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.03);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--muted);
-    cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.03);
-    transition: transform .12s ease, background .12s ease;
-}
-
-.sound-toggle:active {
-    transform: scale(.96)
-}
-
-.sound-toggle.on {
-    box-shadow: 0 6px 20px rgba(186, 246, 112, 0.06);
-    color: var(--accent)
-}
 
 /* Main container */
 .container {
@@ -437,6 +410,13 @@ p.lead {
         box-sizing: border-box;
     }
 
+    @media (max-width: 400px) {
+        body {
+            overflow-y: scroll;
+        }
+    }
+
+
     /* Ako želiš da link zauzima ceo red na vrlo malim ekranima */
     @media (max-width: 420px) {
         .contact {
@@ -449,4 +429,118 @@ p.lead {
         }
     }
 
+}
+
+.contact {
+    margin: 24px 0;
+}
+
+/* Newsletter form */
+#newsletterForm {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.newsletter-label {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.9rem;
+    color: var(--accent);
+    margin: 12px 0;
+}
+
+.newsletter-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 420px;
+}
+
+#newsletterForm input[type="email"] {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.9rem;
+    color: #94a3b8;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    font-size: 0.9rem;
+    width: 50%;
+}
+
+#newsletterForm input[type="email"]::placeholder {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.9rem;
+    color: #94a3b8;
+}
+
+.error-message {
+    color: #ff6b6b;
+    font-size: 0.8rem;
+    min-height: 16px;
+}
+
+
+.newsletter-button {
+    background: linear-gradient(90deg, var(--neon-blue), var(--accent));
+    color: #fff;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8rem;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 14px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    white-space: nowrap;
+    width: auto;
+}
+
+.newsletter-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(186, 246, 112, 0.3);
+}
+
+
+
+
+
+.discord-section {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.discord-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    background: linear-gradient(90deg, var(--neon-blue), var(--accent));
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-family: 'Press Start 2P', cursive;
+    box-shadow: 0 6px 20px rgba(96, 165, 250, 0.3);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.discord-link:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 28px rgba(186, 246, 112, 0.4);
+}
+
+.discord-icon {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    /* ako koristiš emoji */
+}
+
+.discord-icon img {
+    width: 30px;
+    height: 30px;
 }
