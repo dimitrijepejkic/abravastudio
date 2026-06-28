@@ -176,7 +176,7 @@ form.addEventListener("submit", async (e) => {
     try {
 
         const response = await fetch(
-            "http://localhost:5678/webhook-test/06be8f69-924b-4ae5-98db-c9f2f1249a54",
+            "https://n8n-l56q.srv1783263.hstgr.cloud/webhook-test/06be8f69-924b-4ae5-98db-c9f2f1249a54",
             {
                 method: "POST",
                 headers: {
@@ -188,13 +188,23 @@ form.addEventListener("submit", async (e) => {
             }
         );
 
-        if (response.ok) {
+
+        const data = await response.json();
+
+        if (data.code === 601) {
+            alert("You are already subscribed!");
+            return;
+        }
+        else if (response.ok) {
             alert("Thank you for subscribing!");
             form.reset();
         }
+
         else {
             alert("Something went wrong.");
         }
+
+
 
     } catch (err) {
         alert("Unable to connect to the server.");
