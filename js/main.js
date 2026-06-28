@@ -176,7 +176,7 @@ form.addEventListener("submit", async (e) => {
     try {
 
         const response = await fetch(
-            "https://n8n-l56q.srv1783263.hstgr.cloud/webhook-test/06be8f69-924b-4ae5-98db-c9f2f1249a54",
+            "https://n8n-l56q.srv1783263.hstgr.cloud/webhook/06be8f69-924b-4ae5-98db-c9f2f1249a54",
             {
                 method: "POST",
                 headers: {
