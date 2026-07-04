@@ -1,0 +1,7 @@
+{
+  "issuer": "https://abravastudio.com",
+  "authorization_endpoint": "https://abravastudio.com/oauth/authorize",
+  "token_endpoint": "https://abravastudio.com/oauth/token",
+  "jwks_uri": "https://abravastudio.com/.well-known/jwks.json",
+  "grant_types_supported": ["authorization_code", "refresh_token"]
+}

@@ -106,6 +106,46 @@
     })();
 })();
 
+(function registerWebMcpTools() {
+    const modelContext = window.navigator && window.navigator.modelContext;
+    if (!modelContext || typeof modelContext.provideContext !== 'function') {
+        return;
+    }
+
+    modelContext.provideContext({
+        tools: [
+            {
+                name: 'openNewsletterSignup',
+                description: 'Open the newsletter signup area on the site.',
+                inputSchema: {
+                    type: 'object',
+                    properties: {}
+                },
+                execute: async () => {
+                    const input = document.getElementById('email');
+                    if (input) {
+                        input.focus();
+                        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                    return { ok: true, message: 'Newsletter signup is ready.' };
+                }
+            },
+            {
+                name: 'openDiscord',
+                description: 'Open the Discord community link.',
+                inputSchema: {
+                    type: 'object',
+                    properties: {}
+                },
+                execute: async () => {
+                    window.open('https://discord.gg/Pe43a2wpKr', '_blank', 'noopener,noreferrer');
+                    return { ok: true, message: 'Discord link opened.' };
+                }
+            }
+        ]
+    });
+})();
+
 // Newsletter form submission
 
 const form = document.getElementById("newsletterForm");

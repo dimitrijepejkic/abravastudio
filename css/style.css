@@ -27,10 +27,11 @@ body {
     color: #fff;
     min-height: 100vh;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     padding: 24px;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 /* Background layers */
@@ -543,4 +544,82 @@ p.lead {
 .discord-icon img {
     width: 30px;
     height: 30px;
+}
+
+.games-section {
+    margin-top: 60px;
+}
+
+.games-title {
+    font-size: 14px;
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+.game-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 16px;
+    border-radius: 14px;
+    gap: 20px;
+}
+
+.game-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+}
+
+.game-image {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.game-name {
+    margin: 0;
+    font-size: 14px;
+}
+
+.game-desc {
+    margin: 5px 0 0 0;
+    font-size: 12px;
+    opacity: 0.8;
+    line-height: 1.4;
+}
+
+.game-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.play-badge img {
+    height: 45px;
+    transition: transform 0.2s ease;
+}
+
+.play-badge img:hover {
+    transform: scale(1.05);
+}
+
+/* mobile */
+@media (max-width: 600px) {
+    .game-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .game-action {
+        align-self: flex-end;
+    }
+
+    body {
+        overflow-y: scroll;
+    }
 }

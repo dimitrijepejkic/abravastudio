@@ -1,0 +1,27 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://abravastudio.com/",
+      "item": [
+        {
+          "rel": [
+            "service-desc"
+          ],
+          "href": "https://abravastudio.com/api/openapi.json"
+        },
+        {
+          "rel": [
+            "service-doc"
+          ],
+          "href": "https://abravastudio.com/docs/api"
+        },
+        {
+          "rel": [
+            "status"
+          ],
+          "href": "https://abravastudio.com/api/health.json"
+        }
+      ]
+    }
+  ]
+}

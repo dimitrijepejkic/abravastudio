@@ -1,0 +1,16 @@
+{
+  "serverInfo": {
+    "name": "Abrava Studio",
+    "version": "1.0.0"
+  },
+  "transport": {
+    "type": "http",
+    "endpoint": "https://abravastudio.com/api/mcp"
+  },
+  "capabilities": {
+    "tools": [
+      "newsletter-signup",
+      "discord-link"
+    ]
+  }
+}

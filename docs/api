@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Abrava Studio API Docs</title>
+</head>
+
+<body>
+    <h1>Abrava Studio API Docs</h1>
+    <p>This placeholder documentation page advertises the public API surface for agents.</p>
+    <ul>
+        <li>OpenAPI: /api/openapi.json</li>
+        <li>Health: /api/health.json</li>
+        <li>API catalog: /.well-known/api-catalog</li>
+    </ul>
+</body>
+
+</html>
