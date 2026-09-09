@@ -1,7 +1,0 @@
-{
-  "resource": "https://abravastudio.com",
-  "authorization_servers": [
-    "https://abravastudio.com"
-  ],
-  "scopes_supported": ["openid", "profile", "email"]
-}
