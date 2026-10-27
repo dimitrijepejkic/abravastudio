@@ -2,6 +2,11 @@
 
 Rules for anyone (human or AI) changing this repository.
 
+## Going live
+When the studio asks what is left before launch ("šta treba da namestim pre live verzije"), read
+[GO_LIVE.md](GO_LIVE.md), check the real state (`git status`, is `site-v2` pushed or merged?), and walk them
+through the remaining unchecked steps in order, in Serbian. Keep GO_LIVE.md up to date as steps are completed.
+
 ## Production safety
 - `abravastudio.com` is live. **Never deploy, merge to `main`, push, change DNS, or touch Cloudflare/GitHub
   settings without explicit approval from the studio.** Work on a branch; previews are for review.

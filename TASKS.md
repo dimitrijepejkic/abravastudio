@@ -2,6 +2,8 @@
 
 Legend: ✅ done and verified · 🟡 done, needs studio review/approval · ⬜ open.
 
+The ordered pre-launch steps for the studio are in [GO_LIVE.md](GO_LIVE.md) (Serbian).
+
 ## Built (branch `site-v2`)
 
 - ✅ Astro 7 static site, TypeScript strict, route table, EN (`/`) + SR (`/sr/`)
