@@ -1,0 +1,98 @@
+---
+interface Props {
+  email: string;
+  analytics: boolean;
+  utmSource: string;
+  gamePolicies: Array<{ name: string; url: string; page: string }>;
+}
+const { email, analytics, utmSource, gamePolicies } = Astro.props;
+---
+
+<h2>The short version</h2>
+<ul>
+  <li>This website sets no cookies and runs no advertising or tracking scripts.</li>
+  {
+    analytics ? (
+      <li>We count visits with Cloudflare Web Analytics, which works without cookies and without identifying you.</li>
+    ) : (
+      <li>We don’t use any website analytics.</li>
+    )
+  }
+  <li>If you email us, we use your message only to reply to you.</li>
+</ul>
+
+<h2>Who is responsible</h2>
+<p>
+  This policy covers abravastudio.com, the website of Abrava Studio, an independent game studio based in Serbia. For
+  any privacy question, write to <a href={`mailto:${email}`}>{email}</a>.
+</p>
+
+<h2>When you visit the website</h2>
+<p>
+  The website is hosted and delivered by Cloudflare. To serve pages and protect the site against abuse, Cloudflare
+  processes technical data such as your IP address, browser type and the page you requested. Cloudflare acts as our
+  service provider; see the <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">Cloudflare privacy policy</a>.
+</p>
+
+{
+  analytics && (
+    <>
+      <h2>Analytics</h2>
+      <p>
+        We use Cloudflare Web Analytics to see which pages are visited, how fast they load, and roughly where visitors
+        come from (country and referring website). It does not use cookies or local storage and does not build a profile
+        of you. We only see aggregated totals.
+      </p>
+    </>
+  )
+}
+
+<h2>Embedded videos</h2>
+<p>
+  Game pages can show a YouTube video. Nothing is loaded from YouTube until you press play. When you do, the video
+  loads from youtube-nocookie.com and the <a href="https://policies.google.com/privacy" rel="noopener">Google privacy policy</a>
+  applies.
+</p>
+
+<h2>Links to other services</h2>
+<p>
+  Store buttons and community links take you to Google Play, Discord and YouTube, which have their own privacy
+  policies. Links to Google Play carry a campaign tag (<code>utm_source={utmSource}</code>) so we can see, as an
+  aggregate number in the Google Play Console, how many players found a game through this website.
+</p>
+
+<h2>Email</h2>
+<p>
+  When you write to <a href={`mailto:${email}`}>{email}</a>, we receive your email address and whatever you include in
+  your message. We use it only to answer you, and we keep the conversation only as long as we need it to handle your
+  request. We never add you to a mailing list.
+</p>
+
+{
+  gamePolicies.length > 0 && (
+    <>
+      <h2>Our games</h2>
+      <p>Each of our games has its own privacy policy, which is also linked from its store listing:</p>
+      <ul>
+        {gamePolicies.map((game) => (
+          <li>
+            <a href={game.url} rel="noopener">
+              {game.name} privacy policy
+            </a>{' '}
+            (<a href={game.page}>game page</a>)
+          </li>
+        ))}
+      </ul>
+    </>
+  )
+}
+
+<h2>Your rights</h2>
+<p>
+  You can ask us which personal data we hold about you and ask us to correct or delete it by writing to
+  <a href={`mailto:${email}`}>{email}</a>. You can also contact your local data protection authority. In Serbia, that is
+  the Commissioner for Information of Public Importance and Personal Data Protection.
+</p>
+
+<h2>Changes</h2>
+<p>If the way this website handles data changes, we will update this page and the date at the top.</p>

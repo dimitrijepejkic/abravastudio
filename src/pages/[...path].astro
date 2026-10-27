@@ -1,0 +1,89 @@
+---
+/**
+ * Every public page in every language is generated from the route table (src/i18n/routes.ts),
+ * so pages, navigation, hreflang and the sitemap can never disagree.
+ */
+import type { GetStaticPaths } from 'astro';
+import { IS_PRODUCTION, SITE_ENV } from '@/config/site';
+import { missingStudioContent } from '@/data/studio';
+import type { Locale } from '@/i18n/locales';
+import { allPages, pathFor, type PageRef } from '@/i18n/routes';
+import { useTranslations } from '@/i18n/ui';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getGames, type Game } from '@/lib/games';
+import { breadcrumbLd, graph, organizationLd, videoGameLd, websiteLd } from '@/lib/jsonld';
+import AboutView from '@/views/AboutView.astro';
+import ContactView from '@/views/ContactView.astro';
+import GamesView from '@/views/GamesView.astro';
+import GameView from '@/views/GameView.astro';
+import HomeView from '@/views/HomeView.astro';
+import PressView from '@/views/PressView.astro';
+import PrivacyView from '@/views/PrivacyView.astro';
+
+export const getStaticPaths = (async () => {
+  const games = await getGames();
+  console.info(`[abravastudio] SITE_ENV=${SITE_ENV} (${IS_PRODUCTION ? 'indexable' : 'noindex'})`);
+  const missing = missingStudioContent();
+  if (missing.length > 0) {
+    console.warn(`[abravastudio] Content still missing (hidden in production, placeholders on staging):\n  - ${missing.join('\n  - ')}`);
+  }
+  return allPages(games.map((game) => game.id)).map(({ page, locale, path }) => ({
+    params: { path: path === '/' ? undefined : path.replace(/^\/|\/$/g, '') },
+    props: { page, locale, games },
+  }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  page: PageRef;
+  locale: Locale;
+  games: Game[];
+}
+const { page, locale, games } = Astro.props;
+const t = useTranslations(locale);
+const game = page.key === 'game' ? games.find((g) => g.id === page.slug) : undefined;
+
+const OG_STUDIO = '/og/abrava-studio.png';
+const ogFor = (g: Game) => `/og/${g.id}.png`;
+const logoPath = '/brand/abrava-studio-logo.png';
+
+let title = '';
+let description = '';
+let ogImage = OG_STUDIO;
+let ogImageAlt = 'Abrava Studio';
+let jsonLd;
+
+switch (page.key) {
+  case 'home':
+    title = t('home.seo.title');
+    description = t('home.seo.description');
+    jsonLd = graph(organizationLd(logoPath), websiteLd());
+    break;
+  case 'game':
+    title = `${game!.data.seo.title[locale]} | Abrava Studio`;
+    description = game!.data.seo.description[locale];
+    ogImage = ogFor(game!);
+    ogImageAlt = game!.data.keyArtAlt[locale];
+    jsonLd = graph(
+      videoGameLd(game!, locale, pathFor(page, locale), ogImage),
+      breadcrumbLd([
+        { name: t('nav.home'), path: pathFor({ key: 'home' }, locale) },
+        { name: t('nav.games'), path: pathFor({ key: 'games' }, locale) },
+        { name: game!.data.name, path: pathFor(page, locale) },
+      ]),
+    );
+    break;
+  default:
+    title = t(`${page.key}.seo.title`);
+    description = t(`${page.key}.seo.description`);
+}
+---
+
+<BaseLayout {locale} {page} {title} {description} {ogImage} {ogImageAlt} {jsonLd}>
+  {page.key === 'home' && <HomeView {locale} {games} />}
+  {page.key === 'games' && <GamesView {locale} {games} />}
+  {page.key === 'game' && game && <GameView {locale} {game} {games} />}
+  {page.key === 'about' && <AboutView {locale} {games} />}
+  {page.key === 'contact' && <ContactView {locale} />}
+  {page.key === 'press' && <PressView {locale} {games} />}
+  {page.key === 'privacy' && <PrivacyView {locale} {games} />}
+</BaseLayout>

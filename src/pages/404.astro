@@ -1,0 +1,80 @@
+---
+/**
+ * Served by Cloudflare for any unknown URL (not_found_handling: "404-page") with a 404 status.
+ * One static file serves both languages, so it shows both.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { localeMeta } from '@/i18n/locales';
+import { pathFor } from '@/i18n/routes';
+import { dictionaries } from '@/i18n/ui';
+
+const en = dictionaries.en;
+const sr = dictionaries.sr;
+---
+
+<BaseLayout locale="en" title={`${en['notFound.title']} | Abrava Studio`} description={en['notFound.text']} noindex>
+  <section class="section not-found">
+    <div class="starfield starfield--twinkle" aria-hidden="true"></div>
+    <div class="container not-found__inner">
+      <p class="not-found__code" aria-hidden="true">404</p>
+      <div class="not-found__grid">
+        <div class="stack">
+          <h1>{en['notFound.title']}</h1>
+          <p class="lead">{en['notFound.text']}</p>
+          <p class="not-found__actions">
+            <a class="btn btn--primary" href={pathFor({ key: 'home' }, 'en')}>{en['nav.home']}</a>
+            <a class="btn" href={pathFor({ key: 'games' }, 'en')}>{en['nav.games']}</a>
+          </p>
+        </div>
+        <div class="stack" lang={localeMeta.sr.lang}>
+          <h2>{sr['notFound.title']}</h2>
+          <p class="lead">{sr['notFound.text']}</p>
+          <p class="not-found__actions">
+            <a class="btn btn--primary" href={pathFor({ key: 'home' }, 'sr')}>{sr['nav.home']}</a>
+            <a class="btn" href={pathFor({ key: 'games' }, 'sr')}>{sr['nav.games']}</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    overflow: hidden;
+  }
+
+  .not-found__inner {
+    position: relative;
+  }
+
+  .not-found__code {
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 2rem + 10vw, 9rem);
+    line-height: 1;
+    color: var(--c-lime);
+    text-shadow: 0.08em 0.08em 0 var(--c-magenta);
+    margin-bottom: var(--space-7);
+  }
+
+  .not-found__grid {
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  .not-found__grid h2 {
+    font-size: var(--display-lg);
+  }
+
+  .not-found__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  @media (min-width: 56rem) {
+    .not-found__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

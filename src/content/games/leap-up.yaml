@@ -1,0 +1,103 @@
+# Leap UP! — verified against the live Google Play listing (com.leapup) on 2026-10-27.
+# Only facts visible in the listing, its screenshots, or the studio's own copy belong here.
+name: Leap UP!
+storeTitle: 'Leap UP: Endless Runner'
+status: available
+featured: true
+order: 1
+
+genre:
+  en: Endless jumper
+  sr: Igra beskrajnog skakanja
+
+# Official short description from the store listing.
+tagline:
+  en: Totally normal day… probably.
+  sr: Sasvim običan dan… valjda.
+
+summary:
+  en: Escape the sewer, bounce through NYC, and keep going higher than expected.
+  sr: Pobegni iz kanalizacije, skakući kroz Njujork i penji se više nego što si očekivao.
+
+description:
+  en:
+    - Leap UP! is an endless vertical jumper. Tilt your phone to steer, bounce from platform to platform and see how high you can climb.
+    - Start deep in the sewer, burst out onto the streets of New York and keep going, past the rooftops, through the clouds and out into space. Collect coins along the way and spend them in the shop on new skins.
+  sr:
+    - Leap UP! je igra beskrajnog skakanja nagore. Nagni telefon da usmeriš skok, skači s platforme na platformu i proveri koliko visoko možeš da stigneš.
+    - Kreni iz dubine kanalizacije, izleti na ulice Njujorka i nastavi dalje, preko krovova i kroz oblake, sve do svemira. Usput skupljaj novčiće i troši ih u prodavnici na nove izglede lika.
+
+features:
+  - title: { en: Tilt to steer, sr: Nagni i upravljaj }
+    text:
+      en: Tilt your phone left and right to guide every jump.
+      sr: Naginji telefon levo i desno i usmeravaj svaki skok.
+  - title: { en: Endless climb, sr: Penjanje bez kraja }
+    text:
+      en: There’s no finish line. Chase your best score and go again.
+      sr: Nema cilja. Juri svoj najbolji rezultat i pokušaj ponovo.
+  - title: { en: Sewer to space, sr: Od kanalizacije do svemira }
+    text:
+      en: Climb through the sewer, New York City, the clouds and space.
+      sr: Penji se kroz kanalizaciju, Njujork, oblake i svemir.
+  - title: { en: Coins & skins, sr: Novčići i izgledi }
+    text:
+      en: Grab coins on the way up and unlock new skins in the shop.
+      sr: Skupljaj novčiće usput i otključavaj nove izglede lika u prodavnici.
+
+platforms:
+  android:
+    status: available
+    url: https://play.google.com/store/apps/details?id=com.leapup
+
+contentRating: PEGI 3
+
+icon: ../../assets/games/leap-up/icon.png
+keyArt: ../../assets/games/leap-up/feature-graphic.png
+keyArtAlt:
+  en: The Leap UP! hero, a red pixel-art character in a blue cap, standing on a pipe in a brick sewer.
+  sr: Junak igre Leap UP!, crveni piksel-art lik sa plavim kačketom, stoji na cevi u kanalizaciji od cigle.
+
+screenshots:
+  - src: ../../assets/games/leap-up/screenshots/01-title.jpg
+    alt:
+      en: Leap UP! title screen with the hero floating in a UFO beam under a starry sky.
+      sr: Početni ekran igre Leap UP! sa junakom u snopu svetlosti NLO-a pod zvezdanim nebom.
+  - src: ../../assets/games/leap-up/screenshots/02-sewer.jpg
+    alt:
+      en: Jumping between pipes on the brick walls of the sewer.
+      sr: Skakanje po cevima na zidovima kanalizacije od cigle.
+  - src: ../../assets/games/leap-up/screenshots/03-city.jpg
+    featured: true
+    alt:
+      en: Climbing past a New York skyscraper in front of a full moon.
+      sr: Penjanje pored njujorškog nebodera ispred punog meseca.
+  - src: ../../assets/games/leap-up/screenshots/04-sky.jpg
+    alt:
+      en: Bouncing across cloud platforms in the night sky.
+      sr: Skakanje po oblacima na noćnom nebu.
+  - src: ../../assets/games/leap-up/screenshots/05-space.jpg
+    alt:
+      en: Rockets streaking past a yellow planet in outer space.
+      sr: Rakete jure pored žute planete u svemiru.
+  - src: ../../assets/games/leap-up/screenshots/06-shop.png
+    alt:
+      en: The skin shop offering a ninja skin for 500 coins.
+      sr: Prodavnica izgleda nudi nindža izgled za 500 novčića.
+
+trailer:
+  youtubeId: sbs5x37hBJQ
+  title: Leap UP Gameplay
+  poster: ../../assets/games/leap-up/trailer-poster.jpg
+
+links:
+  privacyPolicy: https://sites.google.com/view/leapup-privacy-policy
+  supportEmail: info@abravastudio.com
+
+seo:
+  title:
+    en: 'Leap UP!: endless pixel-art jumper for Android'
+    sr: 'Leap UP!: piksel-art igra beskrajnog skakanja za Android'
+  description:
+    en: Escape the sewer, bounce through NYC and keep going higher than expected. Leap UP! is a pixel-art endless jumper by Abrava Studio, out now on Google Play.
+    sr: Pobegni iz kanalizacije, skakući kroz Njujork i penji se više nego što si očekivao. Leap UP! je piksel-art igra studija Abrava Studio, dostupna na Google Play-u.

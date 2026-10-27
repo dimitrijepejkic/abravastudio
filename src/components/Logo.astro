@@ -1,0 +1,62 @@
+---
+/**
+ * The Abrava Studio wordmark, as used on the original site: lime "A", white "BRAVA", magenta "STUDIO".
+ * Rendered as live text (not an image) so it stays crisp, translatable-safe and readable by search engines.
+ */
+interface Props {
+  as?: 'span' | 'h1' | 'p';
+  size?: 'sm' | 'xl';
+  class?: string;
+}
+const { as: Tag = 'span', size = 'sm', class: className } = Astro.props;
+---
+
+<Tag class:list={['logo', `logo--${size}`, className]}>
+  <span class="logo__brand" aria-hidden="true"><span class="logo__a">A</span>BRAVA</span>{' '}
+  <span class="logo__studio" aria-hidden="true">STUDIO</span>
+  <span class="visually-hidden">Abrava Studio</span>
+</Tag>
+
+<style>
+  .logo {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 0.6em;
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 0.04em;
+    color: var(--c-text);
+    white-space: nowrap;
+  }
+
+  .logo--sm {
+    font-size: 0.875rem;
+  }
+
+  .logo--xl {
+    font-size: var(--display-xl);
+    gap: 0.15em 0.5em;
+    text-shadow: 0 0.12em 0 var(--c-bg-deep);
+  }
+
+  .logo__a {
+    color: var(--c-lime);
+  }
+
+  /* Small sizes use the lighter magenta so the wordmark stays readable (7.8:1); the large
+     hero wordmark keeps the original brand magenta, which passes the 3:1 large-text threshold. */
+  .logo__studio {
+    color: var(--c-magenta-light);
+  }
+
+  .logo--xl .logo__studio {
+    color: var(--c-magenta);
+  }
+
+  .logo--xl .logo__studio {
+    /* Large display text: 3:1 is the WCAG threshold, and the wordmark is a logotype. */
+    filter: drop-shadow(0 0 0.35em rgb(173 26 166 / 0.35));
+  }
+</style>

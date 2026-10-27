@@ -1,0 +1,35 @@
+---
+/**
+ * Marks content the studio still has to supply. Visible on development/staging builds only;
+ * production builds render nothing, so a missing fact never ships as filler text.
+ */
+import { IS_PRODUCTION } from '@/config/site';
+import type { Locale } from '@/i18n/locales';
+import { useTranslations } from '@/i18n/ui';
+
+interface Props {
+  locale: Locale;
+  /** What is missing, for the studio (English is fine: only staging reviewers see it). */
+  note: string;
+}
+const { locale, note } = Astro.props;
+const t = useTranslations(locale);
+---
+
+{
+  !IS_PRODUCTION && (
+    <p class="placeholder" data-placeholder>
+      <strong>{t('placeholder.label')}:</strong> {note}
+    </p>
+  )
+}
+
+<style>
+  .placeholder {
+    padding: var(--space-3) var(--space-4);
+    border: 2px dashed var(--c-moon);
+    color: var(--c-moon);
+    font-size: var(--text-sm);
+    background: rgb(232 216 74 / 0.06);
+  }
+</style>

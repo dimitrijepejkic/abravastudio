@@ -1,0 +1,79 @@
+---
+/**
+ * Links to the same page in the other language. Never redirects, never guesses from the browser.
+ * When a page has no localized equivalent (e.g. 404), it falls back to that locale's home page.
+ */
+import { localeMeta, locales, type Locale } from '@/i18n/locales';
+import { pathFor, type PageRef } from '@/i18n/routes';
+import { dictionaries, useTranslations } from '@/i18n/ui';
+
+interface Props {
+  locale: Locale;
+  page?: PageRef;
+}
+const { locale, page } = Astro.props;
+const t = useTranslations(locale);
+const target = page ?? { key: 'home' as const };
+---
+
+<nav class="lang" aria-label={t('nav.language')}>
+  <ul role="list">
+    {
+      locales.map((l) =>
+        l === locale ? (
+          <li>
+            <span class="lang__item lang__item--current" aria-current="true" lang={localeMeta[l].lang}>
+              <span aria-hidden="true">{localeMeta[l].short}</span>
+              <span class="visually-hidden">{localeMeta[l].label}</span>
+            </span>
+          </li>
+        ) : (
+          <li>
+            <a
+              class="lang__item"
+              href={pathFor(target, l)}
+              hreflang={localeMeta[l].lang}
+              lang={localeMeta[l].lang}
+              data-lang-switch={l}
+            >
+              <span aria-hidden="true">{localeMeta[l].short}</span>
+              <span class="visually-hidden">{dictionaries[l]['nav.switchTo']}</span>
+            </a>
+          </li>
+        ),
+      )
+    }
+  </ul>
+</nav>
+
+<style>
+  .lang ul {
+    display: flex;
+    gap: var(--px);
+    padding: var(--px);
+    background: var(--c-bg-deep);
+    border: 2px solid var(--c-border);
+  }
+
+  .lang__item {
+    display: grid;
+    place-items: center;
+    min-width: 2.75rem;
+    min-height: 2.25rem;
+    padding-inline: var(--space-2);
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    color: var(--c-text-muted);
+    text-decoration: none;
+  }
+
+  a.lang__item:hover {
+    color: var(--c-text);
+    background: var(--c-surface-2);
+  }
+
+  .lang__item--current {
+    background: var(--c-lime);
+    color: var(--c-text-on-accent);
+  }
+</style>

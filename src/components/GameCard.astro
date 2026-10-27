@@ -1,0 +1,127 @@
+---
+import { Image } from 'astro:assets';
+import GameChips from './GameChips.astro';
+import StoreButtons from './StoreButtons.astro';
+import type { Locale } from '@/i18n/locales';
+import { pathFor } from '@/i18n/routes';
+import { useTranslations } from '@/i18n/ui';
+import type { Game } from '@/lib/games';
+import type { StorePlacement } from '@/lib/store';
+
+interface Props {
+  game: Game;
+  locale: Locale;
+  placement: StorePlacement;
+  headingLevel?: 'h2' | 'h3';
+}
+const { game, locale, placement, headingLevel: Heading = 'h2' } = Astro.props;
+const t = useTranslations(locale);
+const href = pathFor({ key: 'game', slug: game.id }, locale);
+---
+
+<article class="game-card">
+  <a href={href} class="game-card__art" tabindex="-1" aria-hidden="true">
+    <Image
+      src={game.data.keyArt}
+      alt=""
+      widths={[480, 768, 1024]}
+      sizes="(min-width: 64rem) 560px, (min-width: 48rem) 50vw, 100vw"
+      class="pixelated"
+    />
+  </a>
+  <div class="game-card__body">
+    <div class="game-card__title">
+      <Image src={game.data.icon} alt="" width={64} height={64} densities={[1, 2]} class="game-card__icon pixel-corners" />
+      <Heading class="game-card__name">
+        <a href={href}>{game.data.name}</a>
+      </Heading>
+    </div>
+    <GameChips game={game} locale={locale} />
+    <p class="game-card__tagline">{game.data.tagline[locale]}</p>
+    <p class="muted">{game.data.summary[locale]}</p>
+    <div class="game-card__actions">
+      <StoreButtons game={game} locale={locale} placement={placement} />
+      <a class="btn" href={href}>{t('games.view', { name: game.data.name })}</a>
+    </div>
+  </div>
+</article>
+
+<style>
+  .game-card {
+    display: grid;
+    background: var(--c-surface);
+    border: 2px solid var(--c-border);
+  }
+
+  .game-card__art {
+    display: block;
+    aspect-ratio: 1024 / 500;
+    overflow: hidden;
+    background: var(--c-brick-dark);
+  }
+
+  .game-card__art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--dur-med) var(--ease-out);
+  }
+
+  .game-card:hover .game-card__art img {
+    transform: scale(1.03);
+  }
+
+  .game-card__body {
+    display: grid;
+    gap: var(--space-4);
+    padding: var(--space-5);
+  }
+
+  .game-card__title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .game-card__icon {
+    width: 64px;
+    height: 64px;
+    flex: none;
+  }
+
+  .game-card__name {
+    font-size: var(--display-md);
+  }
+
+  .game-card__name a {
+    color: var(--c-text);
+    text-decoration: none;
+  }
+
+  .game-card__name a:hover {
+    color: var(--c-lime);
+  }
+
+  .game-card__tagline {
+    font-size: var(--text-lg);
+    font-weight: 600;
+  }
+
+  .game-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 56rem) {
+    .game-card {
+      grid-template-columns: 1.1fr 1fr;
+    }
+
+    .game-card__art {
+      aspect-ratio: auto;
+      min-height: 100%;
+    }
+  }
+</style>

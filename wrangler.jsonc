@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "abravastudio",
+  "compatibility_date": "2026-10-01",
+  // Static site only: no Worker script, Cloudflare serves ./dist directly.
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  // Production domains are attached in the Cloudflare dashboard at cutover (see DEPLOYMENT.md).
+  "workers_dev": true,
+  "preview_urls": true
+}

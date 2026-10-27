@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://abravastudio.com/sitemap.xml

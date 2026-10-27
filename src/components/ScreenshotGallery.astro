@@ -1,0 +1,198 @@
+---
+/**
+ * Scrollable screenshot strip. Each thumbnail links to the full-size image (works without JS);
+ * with JS it opens a native <dialog> lightbox with previous/next and keyboard support.
+ */
+import type { ImageMetadata } from 'astro';
+import { getImage, Image } from 'astro:assets';
+import type { Locale, Localized } from '@/i18n/locales';
+import { useTranslations } from '@/i18n/ui';
+
+interface Props {
+  locale: Locale;
+  screenshots: Array<{ src: ImageMetadata; alt: Localized }>;
+}
+const { locale, screenshots } = Astro.props;
+const t = useTranslations(locale);
+const total = screenshots.length;
+const full = await Promise.all(
+  screenshots.map((shot) => getImage({ src: shot.src, width: Math.min(shot.src.width, 1080), quality: 90 })),
+);
+---
+
+<div class="gallery" data-gallery>
+  <ul role="list" class="gallery__strip">
+    {
+      screenshots.map((shot, i) => (
+        <li>
+          <a
+            class="gallery__thumb"
+            href={full[i]!.src}
+            data-gallery-index={i}
+            data-full={full[i]!.src}
+            data-alt={shot.alt[locale]}
+          >
+            <Image
+              src={shot.src}
+              alt={shot.alt[locale]}
+              widths={[240, 360, 480]}
+              sizes="(min-width: 48rem) 240px, 60vw"
+              quality={90}
+              loading="lazy"
+            />
+            <span class="visually-hidden">({t('game.screenshotOpen', { n: i + 1, total })})</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <dialog class="lightbox" aria-label={t('game.screenshots')} data-lightbox>
+    <div class="lightbox__frame">
+      <img class="lightbox__img" alt="" data-lightbox-img />
+      <p class="lightbox__caption" data-lightbox-caption></p>
+    </div>
+    <div class="lightbox__controls">
+      <button type="button" class="btn" data-lightbox-prev aria-label={t('game.gallery.previous')}>
+        <span aria-hidden="true">&larr;</span>
+      </button>
+      <span class="lightbox__counter" data-lightbox-counter aria-live="polite"></span>
+      <button type="button" class="btn" data-lightbox-next aria-label={t('game.gallery.next')}>
+        <span aria-hidden="true">&rarr;</span>
+      </button>
+      <button type="button" class="btn btn--primary" data-lightbox-close>{t('game.gallery.close')}</button>
+    </div>
+  </dialog>
+  <template data-counter-template>{t('game.gallery.counter')}</template>
+</div>
+
+<script>
+  for (const gallery of document.querySelectorAll<HTMLElement>('[data-gallery]')) {
+    const thumbs = [...gallery.querySelectorAll<HTMLAnchorElement>('[data-gallery-index]')];
+    const dialog = gallery.querySelector<HTMLDialogElement>('[data-lightbox]');
+    const img = gallery.querySelector<HTMLImageElement>('[data-lightbox-img]');
+    const caption = gallery.querySelector<HTMLElement>('[data-lightbox-caption]');
+    const counter = gallery.querySelector<HTMLElement>('[data-lightbox-counter]');
+    const counterTemplate = gallery.querySelector<HTMLTemplateElement>('[data-counter-template]')?.innerHTML ?? '{n} / {total}';
+    if (!dialog || !img || !caption || !counter || typeof dialog.showModal !== 'function') continue;
+
+    let current = 0;
+    let opener: HTMLElement | null = null;
+
+    const show = (index: number) => {
+      current = (index + thumbs.length) % thumbs.length;
+      const thumb = thumbs[current]!;
+      img.src = thumb.dataset.full ?? thumb.href;
+      img.alt = thumb.dataset.alt ?? '';
+      caption.textContent = thumb.dataset.alt ?? '';
+      counter.textContent = counterTemplate.replace('{n}', String(current + 1)).replace('{total}', String(thumbs.length));
+    };
+
+    thumbs.forEach((thumb, index) => {
+      thumb.addEventListener('click', (event) => {
+        event.preventDefault();
+        opener = thumb;
+        show(index);
+        dialog.showModal();
+      });
+    });
+
+    gallery.querySelector('[data-lightbox-prev]')?.addEventListener('click', () => show(current - 1));
+    gallery.querySelector('[data-lightbox-next]')?.addEventListener('click', () => show(current + 1));
+    gallery.querySelector('[data-lightbox-close]')?.addEventListener('click', () => dialog.close());
+
+    dialog.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') show(current - 1);
+      if (event.key === 'ArrowRight') show(current + 1);
+    });
+    // Click on the backdrop closes the dialog.
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+    dialog.addEventListener('close', () => opener?.focus());
+  }
+</script>
+
+<style>
+  .gallery__strip {
+    display: flex;
+    gap: var(--space-4);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: var(--space-2) var(--space-1) var(--space-4);
+    scrollbar-color: var(--c-border-strong) transparent;
+  }
+
+  .gallery__strip li {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+
+  .gallery__thumb {
+    position: relative; /* contains the visually-hidden label inside the scroller */
+    display: block;
+    width: clamp(10rem, 42vw, 15rem);
+    aspect-ratio: 9 / 16;
+    border: 2px solid var(--c-border);
+    background: var(--c-sky);
+    overflow: hidden;
+    transition: border-color var(--dur-fast) linear;
+  }
+
+  .gallery__thumb:hover {
+    border-color: var(--c-lime);
+  }
+
+  .gallery__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .lightbox {
+    width: min(100vw - 2rem, 34rem);
+    max-height: calc(100dvh - 2rem);
+    padding: var(--space-4);
+    border: 2px solid var(--c-border-strong);
+    background: var(--c-bg-deep);
+    color: var(--c-text);
+  }
+
+  .lightbox::backdrop {
+    background: rgb(0 6 16 / 0.88);
+  }
+
+  .lightbox__frame {
+    display: grid;
+    gap: var(--space-3);
+    justify-items: center;
+  }
+
+  .lightbox__img {
+    max-height: calc(100dvh - 12rem);
+    width: auto;
+    image-rendering: pixelated;
+  }
+
+  .lightbox__caption {
+    font-size: var(--text-sm);
+    color: var(--c-text-muted);
+    text-align: center;
+  }
+
+  .lightbox__controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+  }
+
+  .lightbox__counter {
+    min-width: 4rem;
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+  }
+</style>

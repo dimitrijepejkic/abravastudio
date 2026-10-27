@@ -1,0 +1,37 @@
+---
+import GameCard from '@/components/GameCard.astro';
+import PageIntro from '@/components/PageIntro.astro';
+import type { Locale } from '@/i18n/locales';
+import { useTranslations } from '@/i18n/ui';
+import type { Game } from '@/lib/games';
+
+interface Props {
+  locale: Locale;
+  games: Game[];
+}
+const { locale, games } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<PageIntro title={t('games.heading')} lead={t('games.intro')} />
+
+<section class="section section--tight">
+  <div class="container">
+    <ul role="list" class="games-list">
+      {
+        games.map((game) => (
+          <li>
+            <GameCard game={game} locale={locale} placement="games-list" />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .games-list {
+    display: grid;
+    gap: var(--space-6);
+  }
+</style>
