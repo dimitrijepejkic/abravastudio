@@ -61,8 +61,8 @@ Don't expect instant results. Indexing and ranking take weeks, and nothing here 
 
 ## Content and discoverability (pending)
 
-- [ ] Update the Leap UP! Play listing's developer website/email if desired (it shows `contact@` and a Gmail
-      address; the site uses `info@`)
+- [ ] Optional: the Leap UP! Play listing shows `abravastudio@gmail.com` next to `contact@abravastudio.com`
+      (the site uses `contact@` only)
 - [ ] Link to `abravastudio.com` from the YouTube channel and Discord server profiles
 - [ ] Each new game: a detail page with unique copy in both languages (see README "Adding a game")
 - [ ] Consider a devlog/news section only when there is a real publishing plan (DECISIONS.md D12)

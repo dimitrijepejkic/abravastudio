@@ -47,19 +47,20 @@ Search Console, Cloudflare Web Analytics (needs a token).
 
 Shown as placeholders on staging, hidden in production (`src/data/studio.ts`):
 
-- ⬜ Team members: names and roles (EN + SR)
-- ⬜ Founding year
-- ⬜ Upcoming game: title, status, one-line teaser (EN + SR)
+- ✅ Team: Dimitrije Pejkić (Founder / Osnivač), Aleksa Dinić (Co-founder / Suosnivač)
+- ✅ Upcoming project: shown as an unnamed "A new project / Novi projekat, in development". Add the title when it's announced
+- ✅ TikTok: https://www.tiktok.com/@abravastudio
+- ✅ Contact email: `contact@abravastudio.com`
+- ⏸ Founding year: intentionally not published for now (studio decision)
 - ⬜ Legal name and registered address (privacy policy data controller)
-- ⬜ TikTok profile URL, if one exists
 - ⬜ Optional: higher-resolution or source artwork for Leap UP!
 
 ## Studio actions ⬜
 
-- ⬜ Confirm `info@abravastudio.com` forwarding exists (Namecheap email forwarding: MX `eforward*`)
+- ⬜ Confirm `contact@abravastudio.com` forwarding exists (Namecheap email forwarding: MX `eforward*`)
 - ⬜ Approve pushing `site-v2` to GitHub
 - ⬜ Connect the repo in Cloudflare (DEPLOYMENT.md → one-time setup); optionally create a Web Analytics token
 - ⬜ Approve the production cutover (DEPLOYMENT.md → cutover runbook)
 - ⬜ Disable or rotate the old n8n newsletter webhook (SECURITY.md risk 1)
 - ⬜ After launch: Search Console sitemap submission; uptime monitor
-- ⬜ Optional: update the Play listing website/email to match (`info@`)
+- ⬜ Optional: the Play listing also shows `abravastudio@gmail.com` next to `contact@`; remove it if it shouldn't be public

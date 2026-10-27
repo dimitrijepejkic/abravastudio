@@ -93,15 +93,40 @@ test.describe('store links', () => {
   });
 });
 
+test.describe('studio content', () => {
+  test('about page lists the founders in both languages', async ({ page }) => {
+    await page.goto('/about/');
+    await expect(page.getByText('Dimitrije Pejkić')).toBeVisible();
+    await expect(page.getByText('Founder', { exact: true })).toBeVisible();
+    await expect(page.getByText('Aleksa Dinić')).toBeVisible();
+    await expect(page.getByText('Co-founder', { exact: true })).toBeVisible();
+    // The founding year is intentionally not published yet.
+    await expect(page.getByText('Founded', { exact: true })).toHaveCount(0);
+
+    await page.goto('/sr/o-nama/');
+    await expect(page.getByText('Osnivač', { exact: true })).toBeVisible();
+    await expect(page.getByText('Suosnivač', { exact: true })).toBeVisible();
+  });
+
+  test('home shows the unnamed upcoming project and every community channel', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.getByRole('heading', { name: 'A new project' })).toBeVisible();
+    for (const href of ['https://discord.gg/Pe43a2wpKr', 'https://www.youtube.com/@AbravaStudio', 'https://www.tiktok.com/@abravastudio']) {
+      await expect(page.locator(`main a[href="${href}"]`)).toHaveCount(1);
+      await expect(page.locator(`footer a[href="${href}"]`)).toHaveCount(1);
+    }
+  });
+});
+
 test.describe('contact', () => {
-  test('every topic opens a prefilled email to info@abravastudio.com', async ({ page }) => {
+  test('every topic opens a prefilled email to contact@abravastudio.com', async ({ page }) => {
     await page.goto('/contact/');
     const topics = page.locator('[data-topic]');
     await expect(topics).toHaveCount(4);
     const hrefs = await topics.locator('a[href^="mailto:"]').evaluateAll((els) => els.map((el) => el.getAttribute('href')!));
     expect(hrefs).toHaveLength(4);
     for (const href of hrefs) {
-      expect(href).toMatch(/^mailto:info@abravastudio\.com\?subject=.+/);
+      expect(href).toMatch(/^mailto:contact@abravastudio\.com\?subject=.+/);
     }
     // No fake form: contact is email-only by design.
     await expect(page.locator('form')).toHaveCount(0);

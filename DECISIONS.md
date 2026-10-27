@@ -23,7 +23,7 @@ languages because game names are brand names.
 
 ## D5. Contact via categorized mailto links (decided by the studio)
 No form, so there's no spam surface, no backend, no email API and no DNS changes. Four topics (business,
-partnerships, press, support) open the visitor's email app with a localized subject to `info@abravastudio.com`.
+partnerships, press, support) open the visitor's email app with a localized subject to `contact@abravastudio.com`.
 A form can be added later (Worker + Turnstile + email API) if needed.
 
 ## D6. Analytics: Cloudflare Web Analytics (decided by the studio)
@@ -32,8 +32,10 @@ Cookieless and aggregate, so no consent banner is needed. It is enabled only on 
 so store clicks are measured by UTM parameters on Play links, reported in Play Console acquisition reports.
 
 ## D7. Placeholders for unconfirmed studio facts
-Team, founding year, upcoming game and legal entity are `null` in `src/data/studio.ts`. Staging builds show a
-visible placeholder; production omits the section and logs a warning. Missing facts never ship as filler.
+Unconfirmed facts are `null` in `src/data/studio.ts`. Staging builds show a visible placeholder; production omits
+the section and logs a warning. Missing facts never ship as filler. As of 2026-10-27, only the legal entity is
+still missing. The founding year is deliberately unpublished (no placeholder), and the next game is announced
+only as an unnamed "new project" until it has a title.
 
 ## D8. Google Play badge in Serbian is the official Cyrillic one
 Google publishes no Serbian Latin badge. Serbian pages use Google's official Serbian (Cyrillic) badge, with the
@@ -71,3 +73,7 @@ but requires updating the Play listing at the same time.
 
 ## D14. External links open in the same tab
 No `target="_blank"`. This is the accessible default, and on Android, Play links open the Play Store app anyway.
+
+## D15. Contact address is `contact@abravastudio.com` (studio decision)
+It replaced `info@` before launch, and it matches the address on the Leap UP! Play listing. Every page reads it
+from `studio.email`.

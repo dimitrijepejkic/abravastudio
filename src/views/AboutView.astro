@@ -57,7 +57,6 @@ const platforms = [...new Set(games.flatMap((game) => availableStores(game).map(
         <dt>{t('about.facts.contact')}</dt>
         <dd><a href={`mailto:${studio.email}`}>{studio.email}</a></dd>
       </dl>
-      {!studio.foundedYear && <Placeholder locale={locale} note="Founding year (studio.foundedYear)." />}
     </aside>
   </div>
 </section>
@@ -92,8 +91,8 @@ const platforms = [...new Set(games.flatMap((game) => availableStores(game).map(
       studio.upcoming ? (
         <div class="stack">
           <h2 class="about__section-title">{t('about.upcoming.heading')}</h2>
-          <h3>{studio.upcoming.title}</h3>
-          <p class="chip chip--status">{studio.upcoming.status[locale]}</p>
+          <h3>{studio.upcoming.title[locale]}</h3>
+          <p class="chip chip--status upcoming-chip">{studio.upcoming.status[locale]}</p>
           <p class="lead">{studio.upcoming.teaser[locale]}</p>
         </div>
       ) : (
@@ -135,6 +134,10 @@ const platforms = [...new Set(games.flatMap((game) => availableStores(game).map(
     display: grid;
     gap: var(--space-4);
     grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  }
+
+  .upcoming-chip {
+    width: fit-content;
   }
 
   .team__name {

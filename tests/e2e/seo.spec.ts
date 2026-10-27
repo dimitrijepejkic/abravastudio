@@ -60,7 +60,7 @@ test.describe('SEO and metadata (production build)', () => {
     expect(homeTypes).toEqual(['Organization', 'WebSite']);
     const org = home[0]['@graph'][0];
     expect(org.name).toBe('Abrava Studio');
-    expect(org.email).toBe('info@abravastudio.com');
+    expect(org.email).toBe('contact@abravastudio.com');
     expect((await page.request.get(new URL(org.logo).pathname)).status()).toBe(200);
 
     for (const [path, lang] of [['/games/leap-up/', 'en'], ['/sr/igre/leap-up/', 'sr-Latn']] as const) {

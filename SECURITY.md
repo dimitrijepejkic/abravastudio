@@ -34,4 +34,4 @@ All of the above is covered by tests in `tests/e2e/platform.spec.ts` (headers, r
 
 ## Reporting a vulnerability
 
-Email info@abravastudio.com with the details. Please don't open a public issue for security problems.
+Email contact@abravastudio.com with the details. Please don't open a public issue for security problems.

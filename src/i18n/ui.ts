@@ -47,9 +47,10 @@ const en = {
   'home.studio.more': 'More about the studio',
   'home.community.heading': 'Join the community',
   'home.community.text':
-    'Chat with us and other players on Discord, and watch gameplay on our YouTube channel.',
+    'Chat with us and other players on Discord, and follow along on YouTube and TikTok.',
   'home.community.discord': 'Join our Discord',
   'home.community.youtube': 'Watch on YouTube',
+  'home.community.tiktok': 'Follow on TikTok',
   'home.upcoming.heading': 'Coming next',
   'home.contact.heading': 'Let’s make something together',
   'home.contact.text':
@@ -141,6 +142,7 @@ const en = {
     'Facts, descriptions and official images for writing about Abrava Studio and our games. For interviews or anything not covered here, email us.',
   'press.studio.heading': 'Studio fact sheet',
   'press.studio.name': 'Studio',
+  'press.studio.founders': 'Founders',
   'press.studio.website': 'Website',
   'press.studio.email': 'Press contact',
   'press.studio.social': 'Community',
@@ -217,9 +219,10 @@ const sr: Dictionary = {
   'home.studio.more': 'Više o studiju',
   'home.community.heading': 'Pridružite se zajednici',
   'home.community.text':
-    'Družite se sa nama i drugim igračima na Discordu, a snimke iz igre pogledajte na našem YouTube kanalu.',
+    'Družite se sa nama i drugim igračima na Discordu, a novosti pratite na YouTube-u i TikToku.',
   'home.community.discord': 'Pridružite se na Discordu',
   'home.community.youtube': 'Gledajte na YouTube-u',
+  'home.community.tiktok': 'Pratite nas na TikToku',
   'home.upcoming.heading': 'Uskoro',
   'home.contact.heading': 'Hajde da sarađujemo',
   'home.contact.text':
@@ -311,6 +314,7 @@ const sr: Dictionary = {
     'Osnovni podaci, opisi i zvanične slike za pisanje o studiju Abrava Studio i našim igrama. Za intervjue i sve što ovde ne pronađete, pišite nam.',
   'press.studio.heading': 'Osnovni podaci o studiju',
   'press.studio.name': 'Studio',
+  'press.studio.founders': 'Osnivači',
   'press.studio.website': 'Sajt',
   'press.studio.email': 'Kontakt za medije',
   'press.studio.social': 'Zajednica',

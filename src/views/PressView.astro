@@ -57,6 +57,14 @@ const downloads: Download[] = [
       <dl class="facts">
         <dt>{t('press.studio.name')}</dt>
         <dd>{studio.name}</dd>
+        {
+          studio.team.length > 0 && (
+            <>
+              <dt>{t('press.studio.founders')}</dt>
+              <dd>{studio.team.map((member) => `${member.name} (${member.role[locale]})`).join(', ')}</dd>
+            </>
+          )
+        }
         <dt>{t('about.facts.based')}</dt>
         <dd>{studio.country[locale]}</dd>
         <dt>{t('press.studio.website')}</dt>
@@ -66,7 +74,8 @@ const downloads: Download[] = [
         <dt>{t('press.studio.social')}</dt>
         <dd>
           <a href={studio.social.discord} rel="noopener">Discord</a>{', '}
-          <a href={studio.social.youtube} rel="noopener">YouTube</a>
+          <a href={studio.social.youtube} rel="noopener">YouTube</a>{', '}
+          <a href={studio.social.tiktok} rel="noopener">TikTok</a>
         </dd>
       </dl>
     </div>

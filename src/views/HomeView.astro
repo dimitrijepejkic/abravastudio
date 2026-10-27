@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import discordIcon from '@/assets/community/discord.webp';
+import tiktokIcon from '@/assets/community/tiktok.png';
 import youtubeIcon from '@/assets/community/youtube.png';
 import GameCard from '@/components/GameCard.astro';
 import Logo from '@/components/Logo.astro';
@@ -110,6 +111,11 @@ const platforms = [...new Set(games.flatMap((game) => availableStores(game).map(
         <a class="stretched-link" href={studio.social.youtube} rel="noopener">{t('home.community.youtube')}</a>
         <span class="muted">@AbravaStudio</span>
       </li>
+      <li class="card card--interactive community__card">
+        <Image src={tiktokIcon} alt="" width={56} height={56} />
+        <a class="stretched-link" href={studio.social.tiktok} rel="noopener">{t('home.community.tiktok')}</a>
+        <span class="muted">@abravastudio</span>
+      </li>
     </ul>
   </div>
 </section>
@@ -117,11 +123,16 @@ const platforms = [...new Set(games.flatMap((game) => availableStores(game).map(
 {
   studio.upcoming ? (
     <section class="section section--tight" aria-labelledby="upcoming-heading">
-      <div class="container stack">
-        <h2 id="upcoming-heading">{t('home.upcoming.heading')}</h2>
-        <h3>{studio.upcoming.title}</h3>
-        <p class="chip chip--status">{studio.upcoming.status[locale]}</p>
-        <p class="lead">{studio.upcoming.teaser[locale]}</p>
+      <div class="container">
+        <div class="card pixel-corners upcoming">
+          <span class="upcoming__mark" aria-hidden="true">?</span>
+          <div class="stack">
+            <h2 id="upcoming-heading" class="eyebrow">{t('home.upcoming.heading')}</h2>
+            <h3>{studio.upcoming.title[locale]}</h3>
+            <p class="chip chip--status">{studio.upcoming.status[locale]}</p>
+            <p class="muted">{studio.upcoming.teaser[locale]}</p>
+          </div>
+        </div>
       </div>
     </section>
   ) : (
@@ -290,6 +301,39 @@ const platforms = [...new Set(games.flatMap((game) => availableStores(game).map(
 
   .community__card:hover a {
     color: var(--c-lime);
+  }
+
+  .upcoming {
+    display: grid;
+    gap: var(--space-5);
+    align-items: center;
+    padding: clamp(var(--space-5), 3vw, var(--space-7));
+  }
+
+  .upcoming__mark {
+    display: grid;
+    place-items: center;
+    width: 4.5rem;
+    aspect-ratio: 1;
+    background: var(--c-moon);
+    color: var(--c-text-on-accent);
+    font-family: var(--font-display);
+    font-size: 2rem;
+    box-shadow:
+      0 -4px 0 0 var(--c-bg-deep),
+      0 4px 0 0 #8a7f1c,
+      -4px 0 0 0 var(--c-bg-deep),
+      4px 0 0 0 var(--c-bg-deep);
+  }
+
+  .upcoming .chip {
+    width: fit-content;
+  }
+
+  @media (min-width: 48rem) {
+    .upcoming {
+      grid-template-columns: auto 1fr;
+    }
   }
 
   .cta__box {
