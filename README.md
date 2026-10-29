@@ -83,5 +83,5 @@ Only verified facts belong in the copy: no invented history, numbers, ratings or
 
 **Going live:** [GO_LIVE.md](GO_LIVE.md) is the ordered pre-launch checklist (in Serbian).
 
-[PROJECT_PLAN.md](PROJECT_PLAN.md) · [ARCHITECTURE.md](ARCHITECTURE.md) · [DECISIONS.md](DECISIONS.md) ·
+[PROJECT_PLAN.md](PROJECT_PLAN.md) · [ARCHITECTURE.md](ARCHITECTURE.md) · [TECH_STACK.md](TECH_STACK.md) · [DECISIONS.md](DECISIONS.md) ·
 [TASKS.md](TASKS.md) · [SEO_CHECKLIST.md](SEO_CHECKLIST.md) · [SECURITY.md](SECURITY.md) · [DEPLOYMENT.md](DEPLOYMENT.md)

@@ -59,7 +59,9 @@ throttling. Re-measure on the Cloudflare preview URL and on production.
 
 Best practices 92 and part of the mobile LCP come from code Cloudflare injects at the edge, not from the site:
 its "JavaScript Detections" inline script (blocked by our CSP → console error) and the automatic Web Analytics
-beacon. Both are zone settings in the Cloudflare dashboard.
+beacon. Both are zone settings in the Cloudflare dashboard. The beacon now comes from our own build (token set), and
+JavaScript Detections cannot be turned off on the Free plan, so Best practices stays at 92. Accepted (2026-10-29):
+our CSP blocks the injected inline script, and the site works the same either way.
 
 - [x] Re-run on production (above). The preview URL step was skipped: the cutover went straight to production.
 - [ ] Field data (CrUX / Search Console Core Web Vitals) once there is enough traffic

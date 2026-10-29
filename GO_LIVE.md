@@ -85,7 +85,8 @@ Odobreno 29.10.2026 posle pregleda preview-a („sve izgleda dobro”): ostaju t
 3. [x] Rules → Redirect Rules → **www → bez www** (301). 29.10.: wildcard `https://www.abravastudio.com/*` → `https://abravastudio.com/${1}`
 4. [x] Provere: zaglavlja, `robots.txt`, `app-ads.txt`, preusmerenja, 404 (komande su u DEPLOYMENT.md). 29.10.: sve prolazi, `app-ads.txt` bajt-identičan
 5. [x] Merge `site-v2` → `main` (29.10., PR #1; urađen pre koraka 2, pa je sajt nekoliko minuta bio pokvaren). Cloudflare od tada sam objavljuje svaku izmenu na `main`.
-6. [ ] Posle nekoliko dana bez problema: obriši `CNAME` iz repoa i ugasi GitHub Pages
+6. [ ] Posle nekoliko dana bez problema: obriši `CNAME` iz repoa i ugasi GitHub Pages.
+      29.10.: `CNAME` obrisan (odluka studija). Ostaje: GitHub → repo → Settings → Pages → isključi Pages.
 
 **Povratak na stari sajt:** ukloni custom domain sa Worker-a i vrati sačuvane DNS zapise (detalji u DEPLOYMENT.md).
 
