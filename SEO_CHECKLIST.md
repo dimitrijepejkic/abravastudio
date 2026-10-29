@@ -44,7 +44,24 @@ throttling. Re-measure on the Cloudflare preview URL and on production.
 | `/sr/` | mobile | 99 | 100 | 100 | 100 | 1.9 s | 0 | 0 ms |
 | `/sr/` | desktop | 100 | 100 | 100 | 100 | 0.4 s | 0 | 0 ms |
 
-- [ ] Re-run on the preview URL: `npx lighthouse@13.5.0 <url>` and `--preset=desktop`
+### Production (2026-10-29, `https://abravastudio.com`, Lighthouse 13.5.0, simulated throttling)
+
+| Page | Device | Perf | A11y | Best pr. | SEO | LCP | CLS | TBT |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `/` | mobile | 97 | 100 | 92 | 100 | 2.5 s | 0 | 0 ms |
+| `/` | desktop | 100 | 100 | 92 | 100 | 0.6 s | 0 | 0 ms |
+| `/games/leap-up/` | mobile | 97 | 100 | 92 | 100 | 2.3 s | 0 | 0 ms |
+| `/games/leap-up/` | desktop | 100 | 100 | 92 | 100 | 0.6 s | 0 | 0 ms |
+| `/sr/` | mobile | 96 | 100 | 92 | 100 | 2.6 s | 0 | 0 ms |
+| `/sr/` | desktop | 100 | 100 | 92 | 100 | 0.6 s | 0 | 0 ms |
+| `/sr/igre/leap-up/` | mobile | 97 | 100 | 92 | 100 | 2.5 s | 0 | 0 ms |
+| `/sr/igre/leap-up/` | desktop | 100 | 100 | 92 | 100 | 0.6 s | 0 | 0 ms |
+
+Best practices 92 and part of the mobile LCP come from code Cloudflare injects at the edge, not from the site:
+its "JavaScript Detections" inline script (blocked by our CSP → console error) and the automatic Web Analytics
+beacon. Both are zone settings in the Cloudflare dashboard.
+
+- [x] Re-run on production (above). The preview URL step was skipped: the cutover went straight to production.
 - [ ] Field data (CrUX / Search Console Core Web Vitals) once there is enough traffic
 
 ## Google Search Console (studio action, after cutover)

@@ -23,7 +23,7 @@ interface Props {
 const { locale, games } = Astro.props;
 const t = useTranslations(locale);
 
-const PRIVACY_UPDATED = '2026-10-27';
+const PRIVACY_UPDATED = '2026-10-29';
 const updated = new Intl.DateTimeFormat(localeMeta[locale].dateLocale, { dateStyle: 'long', timeZone: 'UTC' }).format(
   new Date(PRIVACY_UPDATED),
 );

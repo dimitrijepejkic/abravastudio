@@ -3,7 +3,7 @@
 Kratka lista koraka do objavljivanja novog sajta, redom. Tehnički detalji su u [DEPLOYMENT.md](DEPLOYMENT.md),
 a odluke i otvorena pitanja u [TASKS.md](TASKS.md) i [DECISIONS.md](DECISIONS.md).
 
-Stanje: **29. 10. 2026.** Kad nešto završiš, štikliraj `[x]` i dopiši datum.
+Stanje: **29. 10. 2026. — sajt je live na Cloudflare-u.** Kad nešto završiš, štikliraj `[x]` i dopiši datum.
 
 ## Gde smo stali
 
@@ -70,24 +70,41 @@ Odobreno 29.10.2026 posle pregleda preview-a („sve izgleda dobro”): ostaju t
 
 ## 8. Pre prelaska (ti)
 
-- [ ] U Cloudflare DNS-u **sačuvaj ili uslikaj** trenutne zapise za `abravastudio.com` i `www`. To je plan B
-      za povratak na stari sajt.
+- [x] U Cloudflare DNS-u **sačuvaj ili uslikaj** trenutne zapise za `abravastudio.com` i `www`. To je plan B
+      za povratak na stari sajt. Sačuvano 29.10.2026 (GitHub Pages):
+      - `abravastudio.com` A → `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153` (Proxied)
+      - `www` CNAME → `abravastudio.com` (Proxied)
+      - Ne dirati: MX `eforward1–5.registrar-servers.com` (email), TXT `google-site-verification=…`,
+        TXT `v=spf1 include:spf.efwd.registrar-servers.com ~all`
 
 ## 9. Prelazak na novi sajt (zajedno, svaki korak uz odobrenje)
 
-1. [ ] `npx wrangler login`, pa production build i `npx wrangler deploy`, pa provera na `workers.dev` adresi
-2. [ ] Worker → Settings → Domains & Routes → **Custom domain** `abravastudio.com`. **Ovo je promena DNS-a.**
-3. [ ] Rules → Redirect Rules → **www → bez www** (301)
-4. [ ] Provere: zaglavlja, `robots.txt`, `app-ads.txt`, preusmerenja, 404 (komande su u DEPLOYMENT.md)
-5. [ ] Merge `site-v2` → `main`. Cloudflare od tada sam objavljuje svaku izmenu na `main`.
+1. [x] `npx wrangler login`, pa production build i `npx wrangler deploy`, pa provera na `workers.dev` adresi
+      (29.10.: deploy je uradio Cloudflare build posle merge-a u `main`)
+2. [x] Worker → Settings → Domains & Routes → **Custom domain** `abravastudio.com`. **Ovo je promena DNS-a.** (29.10.: obrisana 4 GitHub Pages A zapisa, domen dodat)
+3. [x] Rules → Redirect Rules → **www → bez www** (301). 29.10.: wildcard `https://www.abravastudio.com/*` → `https://abravastudio.com/${1}`
+4. [x] Provere: zaglavlja, `robots.txt`, `app-ads.txt`, preusmerenja, 404 (komande su u DEPLOYMENT.md). 29.10.: sve prolazi, `app-ads.txt` bajt-identičan
+5. [x] Merge `site-v2` → `main` (29.10., PR #1; urađen pre koraka 2, pa je sajt nekoliko minuta bio pokvaren). Cloudflare od tada sam objavljuje svaku izmenu na `main`.
 6. [ ] Posle nekoliko dana bez problema: obriši `CNAME` iz repoa i ugasi GitHub Pages
 
 **Povratak na stari sajt:** ukloni custom domain sa Worker-a i vrati sačuvane DNS zapise (detalji u DEPLOYMENT.md).
 
 ## 10. Posle lansiranja (ti)
 
-- [ ] Google Search Console: pošalji `https://abravastudio.com/sitemap.xml`
-- [ ] Uptime monitor (npr. UptimeRobot) za `https://abravastudio.com/` i `/app-ads.txt`
-- [ ] Ugasi ili promeni stari n8n newsletter webhook (adresa mu je javna u git istoriji)
-- [ ] (Opciono) Ukloni `abravastudio@gmail.com` sa Leap UP! stranice na Google Play-u ako ne treba da bude javan
-- [ ] Na YouTube, TikTok i Discord profil dodaj link ka abravastudio.com
+- [x] Google Search Console: pošalji `https://abravastudio.com/sitemap.xml` (29.10.; sitemap i robots.txt provereni:
+      14 adresa, sve 200, kanonski linkovi i hreflang ispravni)
+- [x] AI botovi: Cloudflare blokada isključena 29.10. (odluka studija), robots.txt je sada samo naš `Allow: /` + sitemap
+- [x] Uptime monitor (UptimeRobot) za `https://abravastudio.com/` i `/app-ads.txt` (keyword `pub-7347252425785032`), 29.10.
+- [ ] Ugasi ili promeni stari n8n newsletter webhook (adresa mu je javna u git istoriji):
+      (puna adresa: `git show legacy-gh-pages:js/main.js`; namerno nije upisana ovde)
+      1. Uloguj se na svoj n8n (Hostinger VPS) → **Workflows**
+      2. Nađi workflow čiji **Webhook** čvor ima Path koji počinje sa `06be8f69`, i eventualni
+         **unsubscribe** workflow (path `unsubscribe`)
+      3. Isključi **Active** (ili **Unpublish**) na oba
+      4. Prikupljene mejl adrese (Sheets/baza/Brevo…): izvezi ako planiraš newsletter, inače obriši
+      5. Javi, pa proveravam spolja da webhook više ne odgovara
+      Ako se newsletter vraća: novi nasumičan Path + zaštita od spama, i odluka u DECISIONS.md.
+- [ ] (Opciono) Ukloni `abravastudio@gmail.com` sa Leap UP! stranice na Google Play-u ako ne treba da bude javan.
+      29.10.: listing ga i dalje prikazuje u „About the developer” (uz ime i adresu). To su podaci developer naloga:
+      Play Console → Settings → Developer account → Account details → Contact details. Promena može da čeka Google proveru.
+- [x] Na YouTube, TikTok i Discord profil dodaj link ka abravastudio.com (29.10., uradio studio)

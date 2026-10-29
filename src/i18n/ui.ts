@@ -162,7 +162,7 @@ const en = {
 
   'privacy.seo.title': 'Privacy policy | Abrava Studio',
   'privacy.seo.description':
-    'How abravastudio.com handles your data: no cookies, privacy-friendly analytics, and what happens when you email us.',
+    'How abravastudio.com handles your data: no cookies, no ads, and what happens when you email us.',
   'privacy.heading': 'Privacy policy',
   'privacy.updated': 'Last updated: {date}',
 
@@ -334,7 +334,7 @@ const sr: Dictionary = {
 
   'privacy.seo.title': 'Politika privatnosti | Abrava Studio',
   'privacy.seo.description':
-    'Kako abravastudio.com postupa sa vašim podacima: bez kolačića, analitika koja poštuje privatnost i šta se dešava kada nam pišete.',
+    'Kako abravastudio.com postupa sa vašim podacima: bez kolačića, bez reklama i šta se dešava kada nam pišete.',
   'privacy.heading': 'Politika privatnosti',
   'privacy.updated': 'Poslednja izmena: {date}',
 
