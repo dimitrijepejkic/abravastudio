@@ -1,0 +1,37 @@
+---
+/** Title band at the top of inner pages. */
+interface Props {
+  title: string;
+  lead?: string;
+  eyebrow?: string;
+}
+const { title, lead, eyebrow } = Astro.props;
+---
+
+<section class="page-intro">
+  <div class="starfield" aria-hidden="true"></div>
+  <div class="container page-intro__inner">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h1>{title}</h1>
+    {lead && <p class="lead">{lead}</p>}
+    <slot />
+  </div>
+</section>
+
+<style>
+  .page-intro {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(var(--space-7), 5vw, var(--space-9)) var(--space-6);
+    background: linear-gradient(to bottom, var(--c-bg-deep), var(--c-bg));
+    border-bottom: 2px solid var(--c-border);
+  }
+
+  .page-intro__inner {
+    position: relative;
+  }
+
+  .page-intro__inner > * + * {
+    margin-top: var(--space-4);
+  }
+</style>

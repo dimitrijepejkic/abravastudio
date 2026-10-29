@@ -1,0 +1,5 @@
+# Legacy URLs from the original GitHub Pages site.
+# The newsletter email template was never meant to be a public page.
+/newsletter.html / 301
+# Unsubscribe links in already-sent emails (via n8n) may still point here.
+/unsubscribe.html /unsubscribe/ 301

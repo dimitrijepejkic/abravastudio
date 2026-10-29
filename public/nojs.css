@@ -1,0 +1,21 @@
+/* Loaded only inside <noscript>: show the full navigation when the menu button cannot work. */
+.menu-toggle {
+  display: none !important;
+}
+
+.site-menu {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.site-header__inner {
+  flex-wrap: wrap;
+  padding-block: 0.5rem;
+}
+
+.site-nav {
+  flex-direction: row !important;
+  flex-wrap: wrap;
+}

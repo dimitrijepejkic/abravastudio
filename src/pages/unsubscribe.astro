@@ -1,0 +1,50 @@
+---
+/**
+ * Legacy newsletter confirmation page. The newsletter is disabled, but emails already sent
+ * (and the n8n flow) may still send people to /unsubscribe.html, which redirects here.
+ * Not part of the route table: noindex, excluded from the sitemap.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { localeMeta } from '@/i18n/locales';
+import { pathFor } from '@/i18n/routes';
+---
+
+<BaseLayout
+  locale="en"
+  title="Unsubscribed | Abrava Studio"
+  description="You have been unsubscribed from the Abrava Studio newsletter."
+  noindex
+>
+  <section class="section">
+    <div class="container unsubscribe">
+      <div class="card pixel-corners stack">
+        <h1>You’re unsubscribed</h1>
+        <p class="lead">You won’t receive any more newsletter emails from us. If this was a mistake, just write to us.</p>
+        <p><a class="btn btn--primary" href={pathFor({ key: 'home' }, 'en')}>Back to the website</a></p>
+      </div>
+      <div class="card pixel-corners stack" lang={localeMeta.sr.lang}>
+        <h2>Odjavili ste se</h2>
+        <p class="lead">Više vam nećemo slati newsletter. Ako je u pitanju greška, samo nam pišite.</p>
+        <p><a class="btn btn--primary" href={pathFor({ key: 'home' }, 'sr')}>Nazad na sajt</a></p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .unsubscribe {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .unsubscribe h1,
+  .unsubscribe h2 {
+    font-size: var(--display-md);
+  }
+
+  @media (min-width: 56rem) {
+    .unsubscribe {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

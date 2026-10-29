@@ -1,0 +1,340 @@
+---
+import { Image } from 'astro:assets';
+import GameCard from '@/components/GameCard.astro';
+import GameChips from '@/components/GameChips.astro';
+import ScreenshotGallery from '@/components/ScreenshotGallery.astro';
+import StoreButtons from '@/components/StoreButtons.astro';
+import YouTubeFacade from '@/components/YouTubeFacade.astro';
+import { studio } from '@/data/studio';
+import type { Locale } from '@/i18n/locales';
+import { pathFor } from '@/i18n/routes';
+import { useTranslations, type UiKey } from '@/i18n/ui';
+import { listedPlatforms, platformNames, type Game } from '@/lib/games';
+
+interface Props {
+  locale: Locale;
+  game: Game;
+  games: Game[];
+}
+const { locale, game, games } = Astro.props;
+const t = useTranslations(locale);
+const d = game.data;
+const related = games.filter((other) => other.id !== game.id);
+const supportEmail = d.links.supportEmail ?? studio.email;
+const supportSubject = encodeURIComponent(`${t('contact.support.subject')}: ${d.name}`);
+---
+
+<nav class="container breadcrumbs" aria-label={t('game.breadcrumb')}>
+  <ol role="list">
+    <li><a href={pathFor({ key: 'home' }, locale)}>{t('nav.home')}</a></li>
+    <li><a href={pathFor({ key: 'games' }, locale)}>{t('nav.games')}</a></li>
+    <li><span aria-current="page">{d.name}</span></li>
+  </ol>
+</nav>
+
+<article>
+  <header class="game-hero">
+    <div class="game-hero__art">
+      <Image
+        src={d.keyArt}
+        alt={d.keyArtAlt[locale]}
+        widths={[640, 1024, 1536, 2048]}
+        sizes="100vw"
+        quality={90}
+        loading="eager"
+        fetchpriority="high"
+        class="pixelated"
+      />
+    </div>
+    <div class="container game-hero__panel">
+      <div class="game-hero__title">
+        <Image src={d.icon} alt="" width={96} height={96} densities={[1, 2]} class="game-hero__icon pixel-corners" />
+        <div>
+          <h1>{d.name}</h1>
+          <p class="game-hero__tagline">{d.tagline[locale]}</p>
+        </div>
+      </div>
+      <GameChips game={game} locale={locale} />
+      <p class="lead">{d.summary[locale]}</p>
+      <StoreButtons game={game} locale={locale} placement="game-page" size="lg" priority />
+    </div>
+  </header>
+
+  <section class="section section--tight" aria-labelledby="about-game">
+    <div class="container game-about">
+      <div class="prose">
+        <h2 id="about-game">{t('game.about')}</h2>
+        {d.description[locale].map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+      <aside class="card pixel-corners" aria-labelledby="game-facts">
+        <h2 id="game-facts" class="game-facts__heading">{t('game.facts')}</h2>
+        <dl class="facts">
+          <dt>{t('game.genre')}</dt>
+          <dd>{d.genre[locale]}</dd>
+          <dt>{t('game.platforms')}</dt>
+          <dd>{listedPlatforms(game).map((p) => platformNames[p]).join(', ')}</dd>
+          <dt>{t('game.status')}</dt>
+          <dd>{t(`status.${d.status}` as UiKey)}</dd>
+          {
+            d.contentRating && (
+              <>
+                <dt>{t('game.rating')}</dt>
+                <dd>{d.contentRating}</dd>
+              </>
+            )
+          }
+          <dt>{t('game.studio')}</dt>
+          <dd>{studio.name}</dd>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  {
+    d.features.length > 0 && (
+      <section class="section section--tight" aria-labelledby="game-features">
+        <div class="container">
+          <h2 id="game-features" class="section-title">
+            {t('game.features')}
+          </h2>
+          <ul role="list" class="features">
+            {d.features.map((feature, i) => (
+              <li class="card feature">
+                <span class="feature__index" aria-hidden="true">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <h3>{feature.title[locale]}</h3>
+                <p class="muted">{feature.text[locale]}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    d.screenshots.length > 0 && (
+      <section class="section section--tight" aria-labelledby="game-screenshots">
+        <div class="container">
+          <h2 id="game-screenshots" class="section-title">
+            {t('game.screenshots')}
+          </h2>
+          <ScreenshotGallery locale={locale} screenshots={d.screenshots} />
+        </div>
+      </section>
+    )
+  }
+
+  {
+    d.trailer && (
+      <section class="section section--tight" aria-labelledby="game-trailer">
+        <div class="container">
+          <h2 id="game-trailer" class="section-title">
+            {t('game.trailer')}
+          </h2>
+          <div class="game-trailer">
+            <YouTubeFacade locale={locale} youtubeId={d.trailer.youtubeId} title={d.trailer.title} poster={d.trailer.poster} />
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section section--tight" aria-labelledby="game-support">
+    <div class="container">
+      <div class="card pixel-corners support">
+        <div class="stack">
+          <h2 id="game-support" class="section-title">{t('game.support')}</h2>
+          <p class="muted">{t('game.support.text')}</p>
+        </div>
+        <ul role="list" class="support__links">
+          <li>
+            <a class="btn btn--primary" href={`mailto:${supportEmail}?subject=${supportSubject}`}>
+              {t('game.support.email')}
+            </a>
+          </li>
+          <li>
+            <a class="btn" href={studio.social.discord} rel="noopener">Discord</a>
+          </li>
+          {
+            d.links.privacyPolicy && (
+              <li>
+                <a href={d.links.privacyPolicy} rel="noopener">
+                  {t('game.privacyPolicy', { name: d.name })}
+                </a>
+              </li>
+            )
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+</article>
+
+{
+  related.length > 0 && (
+    <section class="section section--tight" aria-labelledby="related-games">
+      <div class="container">
+        <h2 id="related-games" class="section-title">
+          {t('game.related')}
+        </h2>
+        <ul role="list" class="related">
+          {related.map((other) => (
+            <li>
+              <GameCard game={other} locale={locale} placement="game-page" headingLevel="h3" />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .breadcrumbs {
+    padding-block: var(--space-4);
+    font-size: var(--text-sm);
+  }
+
+  .breadcrumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .breadcrumbs li + li::before {
+    content: '/';
+    margin-right: var(--space-2);
+    color: var(--c-text-muted);
+  }
+
+  .breadcrumbs [aria-current] {
+    color: var(--c-text-muted);
+  }
+
+  .game-hero__art {
+    aspect-ratio: 1024 / 500;
+    max-height: 70vh;
+    overflow: hidden;
+    background: var(--c-brick-dark);
+    border-block: 2px solid var(--c-border);
+  }
+
+  .game-hero__art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .game-hero__panel {
+    position: relative;
+    display: grid;
+    gap: var(--space-5);
+    margin-top: calc(-1 * clamp(2rem, 8vw, 6rem));
+    padding: clamp(var(--space-5), 3vw, var(--space-7));
+    background: var(--c-surface);
+    border: 2px solid var(--c-border-strong);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .game-hero__title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-5);
+  }
+
+  .game-hero__icon {
+    width: 96px;
+    height: 96px;
+  }
+
+  .game-hero__title h1 {
+    font-size: var(--display-xl);
+  }
+
+  .game-hero__tagline {
+    margin-top: var(--space-2);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--c-magenta-light);
+  }
+
+  .game-about {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-7);
+    align-items: start;
+  }
+
+  .game-about .prose h2 {
+    margin-top: 0;
+  }
+
+  .game-facts__heading,
+  .section-title {
+    font-size: var(--display-sm);
+    margin-bottom: var(--space-5);
+  }
+
+  @media (min-width: 56rem) {
+    .game-about {
+      grid-template-columns: 1.6fr 1fr;
+    }
+  }
+
+  .features {
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  }
+
+  .feature {
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+  }
+
+  .feature__index {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    color: var(--c-lime);
+  }
+
+  .feature h3 {
+    font-size: var(--text-lg);
+  }
+
+  .game-trailer {
+    max-width: 60rem;
+  }
+
+  .support {
+    display: grid;
+    gap: var(--space-5);
+    align-items: center;
+  }
+
+  .support .section-title {
+    margin-bottom: 0;
+  }
+
+  .support__links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 56rem) {
+    .support {
+      grid-template-columns: 1fr auto;
+    }
+  }
+
+  .related {
+    display: grid;
+    gap: var(--space-6);
+  }
+</style>

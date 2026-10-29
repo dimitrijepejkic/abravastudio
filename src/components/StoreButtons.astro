@@ -1,0 +1,118 @@
+---
+/**
+ * Official store badges for a game. Only platforms that are `available` with a verified URL
+ * get a badge; everything else shows an honest status line instead of a dead button.
+ *
+ * Badge artwork: official Google Play badges (play.google.com/intl/en_us/badges), unmodified.
+ * Google's only Serbian badge is in Cyrillic; its accessible name is the Latin transliteration.
+ */
+import { Image } from 'astro:assets';
+import playEn from '@/assets/badges/google-play-en.png';
+import playSr from '@/assets/badges/google-play-sr.png';
+import type { Locale } from '@/i18n/locales';
+import { useTranslations } from '@/i18n/ui';
+import { availableStores, type Game } from '@/lib/games';
+import { storeLink, type StorePlacement } from '@/lib/store';
+
+interface Props {
+  game: Game;
+  locale: Locale;
+  placement: StorePlacement;
+  size?: 'md' | 'lg';
+  /** Eager-load the badge when it is above the fold. */
+  priority?: boolean;
+}
+const { game, locale, placement, size = 'md', priority = false } = Astro.props;
+const t = useTranslations(locale);
+const stores = availableStores(game);
+const playBadge = locale === 'sr' ? playSr : playEn;
+// Badge PNGs include Google's required clear space; height is set for the visible badge size.
+const height = size === 'lg' ? 72 : 60;
+---
+
+{
+  stores.length > 0 ? (
+    <ul role="list" class:list={['store-buttons', `store-buttons--${size}`]}>
+      {stores.map((store) => (
+        <li>
+          {store.platform === 'android' ? (
+            <a
+              class="store-badge"
+              href={storeLink('android', store.url, placement)}
+              data-store="google-play"
+              data-game={game.id}
+              data-placement={placement}
+            >
+              <Image
+                src={playBadge}
+                alt={`${t('store.googlePlay')}: ${game.data.name}`}
+                height={height}
+                densities={[1, 2]}
+                loading={priority ? 'eager' : 'lazy'}
+              />
+            </a>
+          ) : (
+            <a
+              class="store-badge store-badge--text"
+              href={storeLink('ios', store.url, placement)}
+              data-store="app-store"
+              data-game={game.id}
+              data-placement={placement}
+            >
+              {t('store.appStore')}
+              <span class="visually-hidden">: {game.data.name}</span>
+            </a>
+          )}
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p class="store-note">{t('game.notReleased')}</p>
+  )
+}
+
+<style>
+  .store-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .store-badge {
+    display: inline-block;
+    border-radius: 6px;
+    transition: transform var(--dur-fast) linear;
+  }
+
+  .store-badge:hover {
+    transform: translateY(-2px);
+  }
+
+  .store-badge img {
+    width: auto;
+  }
+
+  .store-buttons--md .store-badge img {
+    height: 60px;
+  }
+
+  .store-buttons--lg .store-badge img {
+    height: 72px;
+  }
+
+  /* Placeholder style until official App Store badge artwork is added with the first iOS release. */
+  .store-badge--text {
+    padding: var(--space-3) var(--space-4);
+    border: 2px solid var(--c-text);
+    background: #000;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .store-note {
+    color: var(--c-text-muted);
+    font-size: var(--text-sm);
+  }
+</style>

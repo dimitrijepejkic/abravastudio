@@ -1,0 +1,147 @@
+---
+import PageIntro from '@/components/PageIntro.astro';
+import Placeholder from '@/components/Placeholder.astro';
+import { studio } from '@/data/studio';
+import type { Locale } from '@/i18n/locales';
+import { pathFor } from '@/i18n/routes';
+import { useTranslations } from '@/i18n/ui';
+import { availableStores, platformNames, type Game } from '@/lib/games';
+
+interface Props {
+  locale: Locale;
+  games: Game[];
+}
+const { locale, games } = Astro.props;
+const t = useTranslations(locale);
+const released = games.filter((game) => game.data.status === 'available');
+const platforms = [...new Set(games.flatMap((game) => availableStores(game).map((s) => platformNames[s.platform])))];
+---
+
+<PageIntro title={t('about.heading')} lead={t('about.intro')} />
+
+<section class="section section--tight">
+  <div class="container about">
+    <div class="prose">
+      <h2>{t('about.make.heading')}</h2>
+      <p>{t('about.make.text')}</p>
+      <h2>{t('about.work.heading')}</h2>
+      <p>{t('about.work.text')}</p>
+    </div>
+
+    <aside class="card pixel-corners" aria-labelledby="studio-facts">
+      <h2 id="studio-facts" class="about__facts-heading">{t('about.facts.heading')}</h2>
+      <dl class="facts">
+        <dt>{t('about.facts.based')}</dt>
+        <dd>{studio.country[locale]}</dd>
+        {
+          studio.foundedYear && (
+            <>
+              <dt>{t('about.facts.founded')}</dt>
+              <dd>{studio.foundedYear}</dd>
+            </>
+          )
+        }
+        <dt>{t('about.facts.games')}</dt>
+        <dd>
+          {
+            released.map((game, i) => (
+              <>
+                {i > 0 && ', '}
+                <a href={pathFor({ key: 'game', slug: game.id }, locale)}>{game.data.name}</a>
+              </>
+            ))
+          }
+        </dd>
+        <dt>{t('about.facts.platforms')}</dt>
+        <dd>{platforms.join(', ')}</dd>
+        <dt>{t('about.facts.contact')}</dt>
+        <dd><a href={`mailto:${studio.email}`}>{studio.email}</a></dd>
+      </dl>
+    </aside>
+  </div>
+</section>
+
+<section class="section section--tight" aria-labelledby="team-heading">
+  <div class="container">
+    {
+      studio.team.length > 0 ? (
+        <>
+          <h2 id="team-heading" class="about__section-title">
+            {t('about.team.heading')}
+          </h2>
+          <ul role="list" class="team">
+            {studio.team.map((member) => (
+              <li class="card">
+                <p class="team__name">{member.name}</p>
+                <p class="muted">{member.role[locale]}</p>
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : (
+        <Placeholder locale={locale} note="Team members: names and roles in both languages (studio.team)." />
+      )
+    }
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    {
+      studio.upcoming ? (
+        <div class="stack">
+          <h2 class="about__section-title">{t('about.upcoming.heading')}</h2>
+          <h3>{studio.upcoming.title[locale]}</h3>
+          <p class="chip chip--status upcoming-chip">{studio.upcoming.status[locale]}</p>
+          <p class="lead">{studio.upcoming.teaser[locale]}</p>
+        </div>
+      ) : (
+        <Placeholder locale={locale} note="Next game: title, status and teaser (studio.upcoming)." />
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .about {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-7);
+    align-items: start;
+  }
+
+  .about .prose h2:first-child {
+    margin-top: 0;
+  }
+
+  .about__facts-heading,
+  .about__section-title {
+    font-size: var(--display-sm);
+    margin-bottom: var(--space-5);
+  }
+
+  .about aside > :global(.placeholder) {
+    margin-top: var(--space-5);
+  }
+
+  @media (min-width: 56rem) {
+    .about {
+      grid-template-columns: 1.6fr 1fr;
+    }
+  }
+
+  .team {
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  }
+
+  .upcoming-chip {
+    width: fit-content;
+  }
+
+  .team__name {
+    font-weight: 700;
+    font-size: var(--text-lg);
+  }
+</style>

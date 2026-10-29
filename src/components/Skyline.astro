@@ -1,0 +1,61 @@
+---
+/**
+ * Decorative pixel-art city skyline (a nod to the NYC level in Leap UP!).
+ * Generated at build time from a fixed seed, so it is deterministic and ships as inline SVG.
+ */
+const W = 240;
+const H = 48;
+let seed = 7;
+const rand = () => {
+  seed = (seed * 16807) % 2147483647;
+  return (seed - 1) / 2147483646;
+};
+
+interface Rect {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+const buildings: Rect[] = [];
+const windows: Rect[] = [];
+for (let x = 0; x < W; ) {
+  const w = 8 + Math.floor(rand() * 4) * 4;
+  const h = 12 + Math.floor(rand() * 8) * 4;
+  buildings.push({ x, y: H - h, w, h });
+  for (let wx = x + 2; wx < x + w - 2; wx += 3) {
+    for (let wy = H - h + 3; wy < H - 3; wy += 4) {
+      if (rand() > 0.72) windows.push({ x: wx, y: wy, w: 1, h: 1 });
+    }
+  }
+  x += w + (rand() > 0.7 ? 2 : 0);
+}
+// The tall spire, after the skyscraper in the game.
+const spire = { x: Math.round(W * 0.62), w: 14, h: 44 };
+---
+
+<svg
+  class="skyline"
+  viewBox={`0 0 ${W} ${H}`}
+  preserveAspectRatio="xMidYMax slice"
+  shape-rendering="crispEdges"
+  aria-hidden="true"
+  focusable="false"
+>
+  <g fill="#000a1a">
+    {buildings.map((b) => <rect x={b.x} y={b.y} width={b.w} height={b.h} />)}
+    <rect x={spire.x} y={H - spire.h} width={spire.w} height={spire.h} />
+    <rect x={spire.x + 3} y={H - spire.h - 6} width={spire.w - 6} height="6" />
+    <rect x={spire.x + 6} y={H - spire.h - 12} width="2" height="6" />
+  </g>
+  <g fill="#e8d84a" opacity="0.85">
+    {windows.map((w) => <rect x={w.x} y={w.y} width={w.w} height={w.h} />)}
+  </g>
+</svg>
+
+<style>
+  .skyline {
+    width: 100%;
+    height: clamp(72px, 12vw, 160px);
+  }
+</style>

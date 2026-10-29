@@ -1,0 +1,160 @@
+---
+import Logo from './Logo.astro';
+import Skyline from './Skyline.astro';
+import { studio } from '@/data/studio';
+import { localeMeta, locales, type Locale } from '@/i18n/locales';
+import { pathFor, type PageRef } from '@/i18n/routes';
+import { useTranslations } from '@/i18n/ui';
+
+interface Props {
+  locale: Locale;
+  page?: PageRef;
+}
+const { locale, page } = Astro.props;
+const t = useTranslations(locale);
+const year = new Date().getFullYear();
+const home = page ?? { key: 'home' as const };
+---
+
+<footer class="site-footer">
+  <Skyline />
+  <div class="site-footer__body">
+    <div class="container site-footer__grid">
+      <div class="site-footer__brand">
+        <a href={pathFor({ key: 'home' }, locale)} class="site-footer__logo">
+          <Logo />
+        </a>
+        <p class="muted">{t('footer.tagline')}</p>
+        <p>
+          <a href={`mailto:${studio.email}`}>{studio.email}</a>
+        </p>
+      </div>
+
+      <nav aria-label={t('footer.explore')}>
+        <h2 class="site-footer__heading">{t('footer.explore')}</h2>
+        <ul role="list">
+          <li><a href={pathFor({ key: 'home' }, locale)}>{t('nav.home')}</a></li>
+          <li><a href={pathFor({ key: 'games' }, locale)}>{t('nav.games')}</a></li>
+          <li><a href={pathFor({ key: 'about' }, locale)}>{t('nav.about')}</a></li>
+          <li><a href={pathFor({ key: 'press' }, locale)}>{t('nav.press')}</a></li>
+          <li><a href={pathFor({ key: 'contact' }, locale)}>{t('nav.contact')}</a></li>
+        </ul>
+      </nav>
+
+      <div>
+        <h2 class="site-footer__heading">{t('footer.community')}</h2>
+        <ul role="list">
+          <li><a href={studio.social.discord} rel="noopener">Discord</a></li>
+          <li><a href={studio.social.youtube} rel="noopener">YouTube</a></li>
+          <li><a href={studio.social.tiktok} rel="noopener">TikTok</a></li>
+          <li>
+            <a href={studio.social.googlePlayDeveloper} rel="noopener">Google Play</a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="site-footer__heading">{t('footer.legal')}</h2>
+        <ul role="list">
+          <li><a href={pathFor({ key: 'privacy' }, locale)}>{t('nav.privacy')}</a></li>
+        </ul>
+        <h2 class="site-footer__heading site-footer__heading--spaced">{t('nav.language')}</h2>
+        <ul role="list">
+          {
+            locales.map((l) => (
+              <li>
+                {l === locale ? (
+                  <span aria-current="true">{localeMeta[l].label}</span>
+                ) : (
+                  <a href={pathFor(home, l)} hreflang={localeMeta[l].lang} lang={localeMeta[l].lang}>
+                    {localeMeta[l].label}
+                  </a>
+                )}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="container site-footer__legal">
+      <p>{t('footer.copyright', { year })}</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: auto;
+    background: linear-gradient(to bottom, transparent, var(--c-bg-deep) 40%);
+  }
+
+  .site-footer :global(.skyline) {
+    display: block;
+    margin-bottom: -1px;
+  }
+
+  .site-footer__body {
+    background-color: var(--c-brick-dark);
+    /* Sewer bricks, drawn with gradients: the bottom of the climb. */
+    background-image:
+      linear-gradient(rgb(0 10 26 / 0.92), rgb(0 10 26 / 0.86)),
+      linear-gradient(var(--c-brick-dark) 2px, transparent 2px),
+      linear-gradient(90deg, var(--c-brick-dark) 2px, transparent 2px),
+      linear-gradient(var(--c-brick), var(--c-brick));
+    background-size:
+      100% 100%,
+      48px 24px,
+      48px 48px,
+      100% 100%;
+    background-position:
+      0 0,
+      0 0,
+      24px 24px,
+      0 0;
+    padding-block: var(--space-7) var(--space-5);
+  }
+
+  .site-footer__grid {
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  }
+
+  .site-footer__brand > * + * {
+    margin-top: var(--space-3);
+  }
+
+  .site-footer__logo {
+    text-decoration: none;
+  }
+
+  .site-footer__heading {
+    font-size: 0.6875rem;
+    color: var(--c-lime);
+    margin-bottom: var(--space-3);
+  }
+
+  .site-footer__heading--spaced {
+    margin-top: var(--space-5);
+  }
+
+  .site-footer ul a,
+  .site-footer ul span {
+    display: inline-block;
+    padding-block: var(--space-1);
+    color: var(--c-text);
+  }
+
+  .site-footer ul span[aria-current] {
+    color: var(--c-text-muted);
+  }
+
+  .site-footer__legal {
+    margin-top: var(--space-7);
+    padding-top: var(--space-4);
+    border-top: 2px solid rgb(255 255 255 / 0.08);
+    font-size: var(--text-sm);
+    color: var(--c-text-muted);
+  }
+</style>

@@ -1,0 +1,361 @@
+---
+import { Image } from 'astro:assets';
+import discordIcon from '@/assets/community/discord.webp';
+import tiktokIcon from '@/assets/community/tiktok.png';
+import youtubeIcon from '@/assets/community/youtube.png';
+import GameCard from '@/components/GameCard.astro';
+import Logo from '@/components/Logo.astro';
+import Placeholder from '@/components/Placeholder.astro';
+import StoreButtons from '@/components/StoreButtons.astro';
+import { studio } from '@/data/studio';
+import type { Locale } from '@/i18n/locales';
+import { pathFor } from '@/i18n/routes';
+import { useTranslations } from '@/i18n/ui';
+import { availableStores, platformNames, type Game } from '@/lib/games';
+
+interface Props {
+  locale: Locale;
+  games: Game[];
+}
+const { locale, games } = Astro.props;
+const t = useTranslations(locale);
+const featured = games.find((game) => game.data.featured) ?? games[0];
+const heroShot = featured?.data.screenshots.find((shot) => shot.featured) ?? featured?.data.screenshots[0];
+const released = games.filter((game) => game.data.status === 'available');
+const platforms = [...new Set(games.flatMap((game) => availableStores(game).map((s) => platformNames[s.platform])))];
+---
+
+<section class="hero">
+  <div class="starfield starfield--twinkle" aria-hidden="true"></div>
+  <div class="hero__moon" aria-hidden="true"></div>
+  <div class="container hero__grid">
+    <div class="hero__copy">
+      <p class="eyebrow">{t('home.eyebrow')}</p>
+      <Logo as="h1" size="xl" class="hero__logo" />
+      <p class="hero__tagline">{t('home.tagline')}</p>
+      <p class="lead">{t('home.lead')}</p>
+      <div class="hero__actions">
+        {featured && <StoreButtons game={featured} locale={locale} placement="home-hero" size="lg" priority />}
+        <a class="btn" href={pathFor({ key: 'games' }, locale)}>{t('home.cta.games')}</a>
+      </div>
+    </div>
+    {
+      featured && heroShot && (
+        <div class="hero__visual">
+          <a class="phone" href={pathFor({ key: 'game', slug: featured.id }, locale)} tabindex="-1" aria-hidden="true">
+            <Image
+              src={heroShot.src}
+              alt=""
+              widths={[300, 450, 600]}
+              sizes="(min-width: 56rem) 300px, 60vw"
+              quality={90}
+              loading="eager"
+              fetchpriority="high"
+            />
+          </a>
+        </div>
+      )
+    }
+  </div>
+</section>
+
+{
+  featured && (
+    <section class="section featured" aria-labelledby="featured-heading">
+      <div class="container">
+        <h2 id="featured-heading" class="eyebrow featured__label">
+          {t('home.featured.eyebrow')}
+        </h2>
+        <GameCard game={featured} locale={locale} placement="home-featured" headingLevel="h3" />
+      </div>
+    </section>
+  )
+}
+
+<section class="section studio" aria-labelledby="studio-heading">
+  <div class="container studio__grid">
+    <div class="stack">
+      <h2 id="studio-heading">{t('home.studio.heading')}</h2>
+      <p class="lead">{t('home.studio.text')}</p>
+      <p>
+        <a class="btn" href={pathFor({ key: 'about' }, locale)}>{t('home.studio.more')}</a>
+      </p>
+    </div>
+    <dl class="facts card pixel-corners">
+      <dt>{t('about.facts.based')}</dt>
+      <dd>{studio.country[locale]}</dd>
+      <dt>{t('about.facts.games')}</dt>
+      <dd>{released.map((game) => game.data.name).join(', ')}</dd>
+      <dt>{t('about.facts.platforms')}</dt>
+      <dd>{platforms.join(', ')}</dd>
+    </dl>
+  </div>
+</section>
+
+<section class="section community" aria-labelledby="community-heading">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2 id="community-heading">{t('home.community.heading')}</h2>
+        <p class="lead">{t('home.community.text')}</p>
+      </div>
+    </div>
+    <ul role="list" class="community__grid">
+      <li class="card card--interactive community__card">
+        <Image src={discordIcon} alt="" width={56} height={56} densities={[1, 2]} />
+        <a class="stretched-link" href={studio.social.discord} rel="noopener">{t('home.community.discord')}</a>
+        <span class="muted">discord.gg/Pe43a2wpKr</span>
+      </li>
+      <li class="card card--interactive community__card">
+        <Image src={youtubeIcon} alt="" width={56} height={56} />
+        <a class="stretched-link" href={studio.social.youtube} rel="noopener">{t('home.community.youtube')}</a>
+        <span class="muted">@AbravaStudio</span>
+      </li>
+      <li class="card card--interactive community__card">
+        <Image src={tiktokIcon} alt="" width={56} height={56} />
+        <a class="stretched-link" href={studio.social.tiktok} rel="noopener">{t('home.community.tiktok')}</a>
+        <span class="muted">@abravastudio</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+{
+  studio.upcoming ? (
+    <section class="section section--tight" aria-labelledby="upcoming-heading">
+      <div class="container">
+        <div class="card pixel-corners upcoming">
+          <span class="upcoming__mark" aria-hidden="true">?</span>
+          <div class="stack">
+            <h2 id="upcoming-heading" class="eyebrow">{t('home.upcoming.heading')}</h2>
+            <h3>{studio.upcoming.title[locale]}</h3>
+            <p class="chip chip--status">{studio.upcoming.status[locale]}</p>
+            <p class="muted">{studio.upcoming.teaser[locale]}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  ) : (
+    <div class="container">
+      <Placeholder locale={locale} note="Upcoming game teaser: title, status and a one-line teaser (studio.upcoming)." />
+    </div>
+  )
+}
+
+<section class="section cta" aria-labelledby="cta-heading">
+  <div class="container cta__box pixel-corners">
+    <div class="stack">
+      <h2 id="cta-heading">{t('home.contact.heading')}</h2>
+      <p class="lead">{t('home.contact.text')}</p>
+    </div>
+    <div class="cta__actions">
+      <a class="btn btn--primary" href={pathFor({ key: 'contact' }, locale)}>{t('home.contact.cta')}</a>
+      <a href={`mailto:${studio.email}`}>{studio.email}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(var(--space-7), 6vw, var(--space-9));
+    background:
+      radial-gradient(ellipse at 70% 30%, rgb(42 95 163 / 0.35), transparent 60%),
+      linear-gradient(to bottom, var(--c-bg-deep), var(--c-bg));
+  }
+
+  .hero__moon {
+    position: absolute;
+    /* Small and tucked into the corner on phones so it never sits behind text. */
+    top: var(--space-3);
+    right: -1.5rem;
+    width: 4.5rem;
+    aspect-ratio: 1;
+    background:
+      radial-gradient(circle at 30% 35%, rgb(0 0 0 / 0.12) 0 9%, transparent 10%),
+      radial-gradient(circle at 62% 60%, rgb(0 0 0 / 0.12) 0 12%, transparent 13%),
+      radial-gradient(circle at 48% 22%, rgb(0 0 0 / 0.1) 0 6%, transparent 7%),
+      var(--c-moon);
+    border-radius: 50%;
+    opacity: 0.9;
+    filter: drop-shadow(0 0 3rem rgb(232 216 74 / 0.25));
+  }
+
+  .hero__grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-7);
+    align-items: center;
+  }
+
+  .hero__copy > * + * {
+    margin-top: var(--space-5);
+  }
+
+  .hero__tagline {
+    font-family: var(--font-display);
+    font-size: var(--display-sm);
+    line-height: 1.6;
+    color: var(--c-magenta-light);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .hero__visual {
+    display: flex;
+    justify-content: center;
+  }
+
+  .phone {
+    display: block;
+    width: min(64vw, 18.75rem);
+    aspect-ratio: 9 / 16;
+    padding: 10px;
+    background: #0a0f1c;
+    border: 4px solid var(--c-border-strong);
+    border-radius: 28px;
+    box-shadow:
+      var(--shadow-lg),
+      0 0 0 10px rgb(0 10 26 / 0.6);
+    rotate: 4deg;
+    transition: rotate var(--dur-med) var(--ease-out);
+  }
+
+  .phone:hover {
+    rotate: 0deg;
+  }
+
+  .phone img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 18px;
+  }
+
+  @media (min-width: 56rem) {
+    .hero__grid {
+      grid-template-columns: 1.4fr 1fr;
+    }
+
+    .hero__moon {
+      top: clamp(1.5rem, 6vw, 4rem);
+      right: clamp(-3rem, 4vw, 6rem);
+      width: clamp(7rem, 18vw, 14rem);
+    }
+  }
+
+  .featured {
+    background: linear-gradient(to bottom, var(--c-bg), var(--c-sky) 60%, var(--c-bg));
+  }
+
+  .featured__label {
+    margin-bottom: var(--space-5);
+  }
+
+  .studio__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-7);
+    align-items: center;
+  }
+
+  @media (min-width: 56rem) {
+    .studio__grid {
+      grid-template-columns: 1.5fr 1fr;
+    }
+  }
+
+  .community__grid {
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  }
+
+  .community__card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    column-gap: var(--space-4);
+    align-items: center;
+  }
+
+  .community__card img {
+    grid-row: span 2;
+    width: 56px;
+    height: 56px;
+  }
+
+  .community__card a {
+    font-weight: 700;
+    font-size: var(--text-lg);
+    color: var(--c-text);
+    text-decoration: none;
+  }
+
+  .community__card:hover a {
+    color: var(--c-lime);
+  }
+
+  .upcoming {
+    display: grid;
+    gap: var(--space-5);
+    align-items: center;
+    padding: clamp(var(--space-5), 3vw, var(--space-7));
+  }
+
+  .upcoming__mark {
+    display: grid;
+    place-items: center;
+    width: 4.5rem;
+    aspect-ratio: 1;
+    background: var(--c-moon);
+    color: var(--c-text-on-accent);
+    font-family: var(--font-display);
+    font-size: 2rem;
+    box-shadow:
+      0 -4px 0 0 var(--c-bg-deep),
+      0 4px 0 0 #8a7f1c,
+      -4px 0 0 0 var(--c-bg-deep),
+      4px 0 0 0 var(--c-bg-deep);
+  }
+
+  .upcoming .chip {
+    width: fit-content;
+  }
+
+  @media (min-width: 48rem) {
+    .upcoming {
+      grid-template-columns: auto 1fr;
+    }
+  }
+
+  .cta__box {
+    display: grid;
+    gap: var(--space-6);
+    align-items: center;
+    padding: clamp(var(--space-5), 4vw, var(--space-8));
+    background:
+      linear-gradient(135deg, rgb(173 26 166 / 0.18), transparent 55%),
+      var(--c-surface-2);
+  }
+
+  .cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-5);
+  }
+
+  @media (min-width: 56rem) {
+    .cta__box {
+      grid-template-columns: 1.5fr auto;
+    }
+  }
+</style>

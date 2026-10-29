@@ -1,0 +1,60 @@
+---
+/**
+ * Website privacy policy. It describes only what this site actually does:
+ * the analytics paragraph follows the real configuration (CF_ANALYTICS_TOKEN).
+ * Review with the studio before launch; legal entity details are still pending.
+ */
+import PageIntro from '@/components/PageIntro.astro';
+import Placeholder from '@/components/Placeholder.astro';
+import { CF_ANALYTICS_TOKEN } from '@/config/site';
+import { studio } from '@/data/studio';
+import { localeMeta, type Locale } from '@/i18n/locales';
+import { pathFor } from '@/i18n/routes';
+import { useTranslations } from '@/i18n/ui';
+import { UTM_SOURCE } from '@/lib/store';
+import type { Game } from '@/lib/games';
+import PrivacyEn from './privacy/PrivacyEn.astro';
+import PrivacySr from './privacy/PrivacySr.astro';
+
+interface Props {
+  locale: Locale;
+  games: Game[];
+}
+const { locale, games } = Astro.props;
+const t = useTranslations(locale);
+
+const PRIVACY_UPDATED = '2026-10-27';
+const updated = new Intl.DateTimeFormat(localeMeta[locale].dateLocale, { dateStyle: 'long', timeZone: 'UTC' }).format(
+  new Date(PRIVACY_UPDATED),
+);
+
+const shared = {
+  email: studio.email,
+  analytics: Boolean(CF_ANALYTICS_TOKEN),
+  utmSource: UTM_SOURCE,
+  gamePolicies: games
+    .filter((game) => game.data.links.privacyPolicy)
+    .map((game) => ({ name: game.data.name, url: game.data.links.privacyPolicy!, page: pathFor({ key: 'game', slug: game.id }, locale) })),
+};
+---
+
+<PageIntro title={t('privacy.heading')} lead={t('privacy.updated', { date: updated })} />
+
+<section class="section section--tight">
+  <div class="container">
+    {!studio.legalName && <Placeholder locale={locale} note="Data controller: legal name and registered address of the studio (studio.legalName)." />}
+    <div class="prose privacy">
+      {locale === 'sr' ? <PrivacySr {...shared} /> : <PrivacyEn {...shared} />}
+    </div>
+  </div>
+</section>
+
+<style>
+  .privacy {
+    margin-top: var(--space-5);
+  }
+
+  .privacy :global(h2:first-child) {
+    margin-top: 0;
+  }
+</style>

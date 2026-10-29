@@ -1,0 +1,98 @@
+---
+interface Props {
+  email: string;
+  analytics: boolean;
+  utmSource: string;
+  gamePolicies: Array<{ name: string; url: string; page: string }>;
+}
+const { email, analytics, utmSource, gamePolicies } = Astro.props;
+---
+
+<h2>Ukratko</h2>
+<ul>
+  <li>Ovaj sajt ne postavlja kolačiće i ne koristi skripte za oglašavanje ili praćenje.</li>
+  {
+    analytics ? (
+      <li>Posete brojimo pomoću alata Cloudflare Web Analytics, koji radi bez kolačića i ne otkriva ko ste.</li>
+    ) : (
+      <li>Ne koristimo nikakvu analitiku sajta.</li>
+    )
+  }
+  <li>Ako nam pošaljete e-poruku, koristimo je samo da bismo vam odgovorili.</li>
+</ul>
+
+<h2>Ko je odgovoran</h2>
+<p>
+  Ova politika se odnosi na abravastudio.com, sajt studija Abrava Studio, nezavisnog studija za razvoj igara iz Srbije.
+  Sva pitanja o privatnosti pošaljite na <a href={`mailto:${email}`}>{email}</a>.
+</p>
+
+<h2>Kada posetite sajt</h2>
+<p>
+  Sajt hostuje i isporučuje Cloudflare. Da bi prikazao stranice i zaštitio sajt od zloupotrebe, Cloudflare obrađuje
+  tehničke podatke kao što su vaša IP adresa, vrsta pregledača i stranica koju ste otvorili. Cloudflare radi kao naš
+  pružalac usluga; pogledajte <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">politiku privatnosti kompanije Cloudflare</a>.
+</p>
+
+{
+  analytics && (
+    <>
+      <h2>Analitika</h2>
+      <p>
+        Koristimo Cloudflare Web Analytics da bismo videli koje se stranice posećuju, koliko se brzo učitavaju i otprilike
+        odakle posetioci dolaze (zemlja i sajt sa kog su došli). Ovaj alat ne koristi kolačiće niti lokalno skladište i ne
+        pravi vaš profil. Mi vidimo samo zbirne brojke.
+      </p>
+    </>
+  )
+}
+
+<h2>Ugrađeni video snimci</h2>
+<p>
+  Na stranicama igara može se nalaziti YouTube video. Ništa se ne učitava sa YouTube-a dok ne pokrenete video. Tada se
+  video učitava sa youtube-nocookie.com i primenjuje se <a href="https://policies.google.com/privacy?hl=sr" rel="noopener">Google-ova politika privatnosti</a>.
+</p>
+
+<h2>Linkovi ka drugim servisima</h2>
+<p>
+  Dugmad prodavnica i linkovi zajednice vode na Google Play, Discord, YouTube i TikTok, koji imaju svoje politike
+  privatnosti.
+  Linkovi ka Google Play-u sadrže oznaku kampanje (<code>utm_source={utmSource}</code>), kako bismo u Google Play
+  konzoli videli zbirni broj igrača koji su igru pronašli preko ovog sajta.
+</p>
+
+<h2>E-pošta</h2>
+<p>
+  Kada nam pišete na <a href={`mailto:${email}`}>{email}</a>, dobijamo vašu adresu e-pošte i sve što navedete u poruci.
+  Koristimo ih samo da bismo vam odgovorili i čuvamo prepisku samo onoliko dugo koliko je potrebno da rešimo vaš
+  zahtev. Nikada vas ne dodajemo na mejling listu.
+</p>
+
+{
+  gamePolicies.length > 0 && (
+    <>
+      <h2>Naše igre</h2>
+      <p>Svaka naša igra ima sopstvenu politiku privatnosti, na koju vodi i link sa stranice u prodavnici:</p>
+      <ul>
+        {gamePolicies.map((game) => (
+          <li>
+            <a href={game.url} rel="noopener">
+              Politika privatnosti igre {game.name}
+            </a>{' '}
+            (<a href={game.page}>stranica igre</a>)
+          </li>
+        ))}
+      </ul>
+    </>
+  )
+}
+
+<h2>Vaša prava</h2>
+<p>
+  Možete nas pitati koje vaše podatke o ličnosti imamo i zatražiti da ih ispravimo ili obrišemo tako što ćete pisati na
+  <a href={`mailto:${email}`}>{email}</a>. Možete se obratiti i nadležnom organu za zaštitu podataka o ličnosti; u
+  Srbiji je to Poverenik za informacije od javnog značaja i zaštitu podataka o ličnosti.
+</p>
+
+<h2>Izmene</h2>
+<p>Ako se promeni način na koji ovaj sajt postupa sa podacima, ažuriraćemo ovu stranicu i datum na vrhu.</p>

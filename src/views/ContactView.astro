@@ -1,0 +1,106 @@
+---
+import { Image } from 'astro:assets';
+import discordIcon from '@/assets/community/discord.webp';
+import PageIntro from '@/components/PageIntro.astro';
+import { studio } from '@/data/studio';
+import type { Locale } from '@/i18n/locales';
+import { pathFor } from '@/i18n/routes';
+import { useTranslations, type UiKey } from '@/i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const topics = ['business', 'partnership', 'press', 'support'] as const;
+const mailto = (topic: (typeof topics)[number]) =>
+  `mailto:${studio.email}?subject=${encodeURIComponent(t(`contact.${topic}.subject` as UiKey))}`;
+---
+
+<PageIntro title={t('contact.heading')} lead={t('contact.intro')} />
+
+<section class="section section--tight">
+  <div class="container">
+    <ul role="list" class="topics">
+      {
+        topics.map((topic) => (
+          <li class="card card--interactive topic" data-topic={topic}>
+            <h2 class="topic__title">{t(`contact.${topic}.title` as UiKey)}</h2>
+            <p class="muted">{t(`contact.${topic}.text` as UiKey)}</p>
+            <p class="topic__actions">
+              <a class="btn btn--primary" href={mailto(topic)}>
+                {t('contact.emailCta')}
+                <span class="visually-hidden">: {t(`contact.${topic}.title` as UiKey)}</span>
+              </a>
+              {topic === 'press' && <a href={pathFor({ key: 'press' }, locale)}>{t('contact.pressKit')}</a>}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="direct">
+      {t('contact.direct')} <a href={`mailto:${studio.email}`}>{studio.email}</a>
+    </p>
+  </div>
+</section>
+
+<section class="section section--tight" aria-labelledby="chat-heading">
+  <div class="container">
+    <div class="card pixel-corners chat">
+      <Image src={discordIcon} alt="" width={64} height={64} densities={[1, 2]} />
+      <div class="stack">
+        <h2 id="chat-heading" class="topic__title">{t('contact.community.heading')}</h2>
+        <p class="muted">{t('contact.community.text')}</p>
+      </div>
+      <a class="btn" href={studio.social.discord} rel="noopener">{t('home.community.discord')}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .topics {
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  }
+
+  .topic {
+    display: grid;
+    gap: var(--space-3);
+    align-content: start;
+  }
+
+  .topic__title {
+    font-family: var(--font-body);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .topic__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+    margin-top: var(--space-3);
+  }
+
+  .direct {
+    margin-top: var(--space-6);
+    font-size: var(--text-lg);
+  }
+
+  .chat {
+    display: grid;
+    gap: var(--space-5);
+    align-items: center;
+  }
+
+  @media (min-width: 48rem) {
+    .chat {
+      grid-template-columns: auto 1fr auto;
+    }
+  }
+</style>

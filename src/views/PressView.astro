@@ -1,0 +1,249 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import logo from '@/assets/brand/abrava-studio-logo.png';
+import PageIntro from '@/components/PageIntro.astro';
+import { SITE_URL } from '@/config/site';
+import { studio } from '@/data/studio';
+import type { Locale } from '@/i18n/locales';
+import { useTranslations, type UiKey } from '@/i18n/ui';
+import { availableStores, listedPlatforms, platformNames, type Game } from '@/lib/games';
+
+interface Props {
+  locale: Locale;
+  games: Game[];
+}
+const { locale, games } = Astro.props;
+const t = useTranslations(locale);
+
+interface Download {
+  label: string;
+  image: ImageMetadata;
+  /** File name offered to the browser; the URL itself is content-hashed. */
+  fileName: string;
+  pixelated?: boolean;
+}
+const extension = (image: ImageMetadata) => image.format.replace('jpeg', 'jpg');
+const downloads: Download[] = [
+  { label: t('press.downloads.logo'), image: logo, fileName: `abrava-studio-logo.${extension(logo)}`, pixelated: true },
+  ...games.flatMap((game): Download[] => [
+    {
+      label: t('press.downloads.icon', { name: game.data.name }),
+      image: game.data.icon,
+      fileName: `${game.id}-icon.${extension(game.data.icon)}`,
+      pixelated: true,
+    },
+    {
+      label: t('press.downloads.keyart', { name: game.data.name }),
+      image: game.data.keyArt,
+      fileName: `${game.id}-key-art.${extension(game.data.keyArt)}`,
+      pixelated: true,
+    },
+    ...game.data.screenshots.map((shot, i) => ({
+      label: t('press.downloads.screenshot', { name: game.data.name, n: i + 1 }),
+      image: shot.src,
+      fileName: `${game.id}-screenshot-${i + 1}.${extension(shot.src)}`,
+    })),
+  ]),
+];
+---
+
+<PageIntro title={t('press.heading')} lead={t('press.intro')} />
+
+<section class="section section--tight">
+  <div class="container press">
+    <div class="card pixel-corners">
+      <h2 class="press__title">{t('press.studio.heading')}</h2>
+      <dl class="facts">
+        <dt>{t('press.studio.name')}</dt>
+        <dd>{studio.name}</dd>
+        {
+          studio.team.length > 0 && (
+            <>
+              <dt>{t('press.studio.founders')}</dt>
+              <dd>{studio.team.map((member) => `${member.name} (${member.role[locale]})`).join(', ')}</dd>
+            </>
+          )
+        }
+        <dt>{t('about.facts.based')}</dt>
+        <dd>{studio.country[locale]}</dd>
+        <dt>{t('press.studio.website')}</dt>
+        <dd><a href={`${SITE_URL}/`}>abravastudio.com</a></dd>
+        <dt>{t('press.studio.email')}</dt>
+        <dd><a href={`mailto:${studio.email}`}>{studio.email}</a></dd>
+        <dt>{t('press.studio.social')}</dt>
+        <dd>
+          <a href={studio.social.discord} rel="noopener">Discord</a>{', '}
+          <a href={studio.social.youtube} rel="noopener">YouTube</a>{', '}
+          <a href={studio.social.tiktok} rel="noopener">TikTok</a>
+        </dd>
+      </dl>
+    </div>
+
+    <div class="prose">
+      <h2 class="press__title">{t('press.boilerplate.heading')}</h2>
+      <blockquote class="boilerplate">
+        <p>{t('press.boilerplate.text')}</p>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+{
+  games.map((game) => (
+    <section class="section section--tight" aria-labelledby={`press-${game.id}`}>
+      <div class="container press">
+        <div class="card pixel-corners">
+          <h2 id={`press-${game.id}`} class="press__title">
+            {t('press.game.heading', { name: game.data.name })}
+          </h2>
+          <dl class="facts">
+            <dt>{t('game.genre')}</dt>
+            <dd>{game.data.genre[locale]}</dd>
+            <dt>{t('game.platforms')}</dt>
+            <dd>{listedPlatforms(game).map((p) => platformNames[p]).join(', ')}</dd>
+            <dt>{t('game.status')}</dt>
+            <dd>{t(`status.${game.data.status}` as UiKey)}</dd>
+            {game.data.contentRating && (
+              <>
+                <dt>{t('game.rating')}</dt>
+                <dd>{game.data.contentRating}</dd>
+              </>
+            )}
+            {availableStores(game).map((store) => (
+              <>
+                <dt>{t('press.game.store')}</dt>
+                <dd>
+                  <a href={store.url} rel="noopener">
+                    {store.platform === 'android' ? 'Google Play' : 'App Store'}
+                  </a>
+                </dd>
+              </>
+            ))}
+          </dl>
+        </div>
+        <div class="prose">
+          <p class="press__tagline">{game.data.tagline[locale]}</p>
+          {game.data.description[locale].map((paragraph) => (
+            <p>{paragraph}</p>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))
+}
+
+<section class="section section--tight" aria-labelledby="downloads-heading">
+  <div class="container">
+    <h2 id="downloads-heading" class="press__title">{t('press.downloads.heading')}</h2>
+    <p class="muted press__usage">{t('press.usage')}</p>
+    <ul role="list" class="downloads">
+      {
+        downloads.map((item) => (
+          <li class="card download">
+            <div class="download__preview">
+              <Image
+                src={item.image}
+                alt=""
+                width={Math.min(item.image.width, 320)}
+                quality={85}
+                loading="lazy"
+                class:list={[item.pixelated && 'pixelated']}
+              />
+            </div>
+            <p class="download__label">{item.label}</p>
+            <p class="muted download__meta">
+              {item.image.format.toUpperCase()} · {item.image.width}×{item.image.height}
+            </p>
+            <a class="btn" href={item.image.src} download={item.fileName}>
+              {t('press.downloads.action')}
+              <span class="visually-hidden">: {item.label}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .press {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-6);
+    align-items: start;
+  }
+
+  @media (min-width: 56rem) {
+    .press {
+      grid-template-columns: 1fr 1.4fr;
+    }
+  }
+
+  .press__title {
+    font-size: var(--display-sm);
+    margin-bottom: var(--space-5);
+  }
+
+  .press .prose .press__title {
+    margin-top: 0;
+  }
+
+  .press__tagline {
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--c-magenta-light);
+  }
+
+  .boilerplate {
+    padding-left: var(--space-5);
+    border-left: 4px solid var(--c-lime);
+    font-size: var(--text-lg);
+  }
+
+  .press__usage {
+    margin-bottom: var(--space-5);
+    max-width: var(--prose-max);
+  }
+
+  .downloads {
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  }
+
+  .download {
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+    padding: var(--space-4);
+  }
+
+  .download__preview {
+    display: grid;
+    place-items: center;
+    height: 10rem;
+    margin-bottom: var(--space-2);
+    background: var(--c-bg-deep);
+    overflow: hidden;
+  }
+
+  .download__preview img {
+    max-height: 100%;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .download__label {
+    font-weight: 700;
+  }
+
+  .download__meta {
+    font-size: var(--text-xs);
+  }
+
+  .download .btn {
+    justify-self: start;
+    margin-top: var(--space-2);
+  }
+</style>

@@ -1,0 +1,103 @@
+---
+import '@fontsource/press-start-2p/latin-400.css';
+import '@fontsource/press-start-2p/latin-ext-400.css';
+import '@fontsource-variable/space-grotesk/wght.css';
+import '@/styles/global.css';
+
+import pressStartLatin from '@fontsource/press-start-2p/files/press-start-2p-latin-400-normal.woff2?url';
+import spaceGroteskLatin from '@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2?url';
+
+import Analytics from '@/components/Analytics.astro';
+import Footer from '@/components/Footer.astro';
+import Header from '@/components/Header.astro';
+import JsonLd from '@/components/JsonLd.astro';
+import { GOOGLE_SITE_VERIFICATION, IS_PRODUCTION, SITE_URL } from '@/config/site';
+import { localeMeta, locales, type Locale } from '@/i18n/locales';
+import { alternatesFor, pathFor, type PageRef } from '@/i18n/routes';
+import { useTranslations } from '@/i18n/ui';
+import type { JsonLd as JsonLdData } from '@/lib/jsonld';
+
+export interface Props {
+  locale: Locale;
+  /** The page in the route table. Omit for pages outside it (404, unsubscribe): no canonical/hreflang. */
+  page?: PageRef;
+  title: string;
+  description: string;
+  /** Root-relative path to a 1200×630 image in /public/og/. */
+  ogImage?: string;
+  ogImageAlt?: string;
+  noindex?: boolean;
+  jsonLd?: JsonLdData;
+}
+
+const {
+  locale,
+  page,
+  title,
+  description,
+  ogImage = '/og/abrava-studio.png',
+  ogImageAlt = 'Abrava Studio',
+  noindex = false,
+  jsonLd,
+} = Astro.props;
+
+const t = useTranslations(locale);
+const meta = localeMeta[locale];
+const abs = (path: string) => new URL(path, SITE_URL).toString();
+const canonical = page ? abs(pathFor(page, locale)) : undefined;
+const alternates = page ? alternatesFor(page) : [];
+// Previews and local builds are never indexable; only production can opt in.
+const robots = noindex || !IS_PRODUCTION ? 'noindex, nofollow' : 'index, follow, max-image-preview:large';
+---
+
+<!doctype html>
+<html lang={meta.lang} dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    {alternates.map((alt) => <link rel="alternate" hreflang={localeMeta[alt.locale].lang} href={abs(alt.path)} />)}
+    {page && <link rel="alternate" hreflang="x-default" href={abs(pathFor(page, 'en'))} />}
+
+    <link rel="preload" href={pressStartLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={spaceGroteskLatin} as="font" type="font/woff2" crossorigin />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={t('site.name')} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    <meta property="og:image" content={abs(ogImage)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    <meta property="og:locale" content={meta.ogLocale} />
+    {
+      locales
+        .filter((l) => l !== locale)
+        .map((l) => <meta property="og:locale:alternate" content={localeMeta[l].ogLocale} />)
+    }
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#00122b" />
+    <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />
+
+    <noscript><link rel="stylesheet" href="/nojs.css" /></noscript>
+    {jsonLd && <JsonLd data={jsonLd} />}
+    <Analytics />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{t('a11y.skip')}</a>
+    <Header locale={locale} page={page} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer locale={locale} page={page} />
+  </body>
+</html>

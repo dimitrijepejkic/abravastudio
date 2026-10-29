@@ -1,0 +1,19 @@
+---
+import type { Locale } from '@/i18n/locales';
+import { useTranslations, type UiKey } from '@/i18n/ui';
+import { listedPlatforms, platformNames, type Game } from '@/lib/games';
+
+interface Props {
+  game: Game;
+  locale: Locale;
+}
+const { game, locale } = Astro.props;
+const t = useTranslations(locale);
+const statusKey = `status.${game.data.status}` as UiKey;
+---
+
+<ul role="list" class="chip-list">
+  <li class="chip chip--status">{t(statusKey)}</li>
+  {listedPlatforms(game).map((platform) => <li class="chip">{platformNames[platform]}</li>)}
+  <li class="chip">{game.data.genre[locale]}</li>
+</ul>
