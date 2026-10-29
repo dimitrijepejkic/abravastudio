@@ -4,7 +4,7 @@ import { trackProblems } from './helpers';
 const PLAY_BASE = 'https://play.google.com/store/apps/details?id=com.leapup';
 
 test.describe('visitor journeys', () => {
-  test('home → games → Leap UP! → Serbian → back to English', async ({ page, isMobile }) => {
+  test('home → games → Leap UP → Serbian → back to English', async ({ page, isMobile }) => {
     const problems = trackProblems(page);
 
     await page.goto('/');
@@ -17,16 +17,16 @@ test.describe('visitor journeys', () => {
     await expect(page).toHaveURL(/\/games\/$/);
     await expect(page.locator('h1')).toHaveText('Our games');
 
-    await page.getByRole('link', { name: 'Leap UP!', exact: true }).first().click();
+    await page.getByRole('link', { name: 'Leap UP: Pixel Jump Game', exact: true }).first().click();
     await expect(page).toHaveURL(/\/games\/leap-up\/$/);
-    await expect(page.locator('h1')).toHaveText('Leap UP!');
+    await expect(page.locator('h1')).toHaveText('Leap UP: Pixel Jump Game');
 
     // Switch language: must land on the same game, in Serbian.
     if (isMobile) await page.getByRole('button', { name: 'Menu' }).click();
     await page.locator('header [data-lang-switch="sr"]').click();
     await expect(page).toHaveURL(/\/sr\/igre\/leap-up\/$/);
     await expect(page.locator('html')).toHaveAttribute('lang', 'sr-Latn');
-    await expect(page.locator('h1')).toHaveText('Leap UP!');
+    await expect(page.locator('h1')).toHaveText('Leap UP: Pixel Jump Game');
     await expect(page.getByText('Sasvim običan dan… valjda.')).toBeVisible();
 
     if (isMobile) await page.getByRole('button', { name: 'Meni' }).click();
@@ -84,7 +84,7 @@ test.describe('store links', () => {
     await expect.poll(() => requested).toContain('play.google.com/store/apps/details?id=com.leapup');
   });
 
-  test('no App Store button exists while Leap UP! is Android-only', async ({ page }) => {
+  test('no App Store button exists while Leap UP is Android-only', async ({ page }) => {
     for (const path of ['/', '/games/', '/games/leap-up/', '/sr/igre/leap-up/', '/press/']) {
       await page.goto(path);
       await expect(page.locator('a[data-store="app-store"]')).toHaveCount(0);
@@ -147,9 +147,9 @@ test.describe('interactive components', () => {
     await page.keyboard.press('Enter');
     const dialog = page.locator('dialog[data-lightbox]');
     await expect(dialog).toBeVisible();
-    await expect(page.locator('[data-lightbox-counter]')).toHaveText('1 / 6');
+    await expect(page.locator('[data-lightbox-counter]')).toHaveText('1 / 8');
     await page.keyboard.press('ArrowRight');
-    await expect(page.locator('[data-lightbox-counter]')).toHaveText('2 / 6');
+    await expect(page.locator('[data-lightbox-counter]')).toHaveText('2 / 8');
     await page.keyboard.press('Escape');
     await expect(dialog).toBeHidden();
     await expect(first).toBeFocused();
@@ -166,7 +166,7 @@ test.describe('interactive components', () => {
     expect(youtube).toEqual([]);
     await page.locator('[data-youtube] a').click();
     const iframe = page.locator('[data-youtube] iframe');
-    await expect(iframe).toHaveAttribute('src', /^https:\/\/www\.youtube-nocookie\.com\/embed\/sbs5x37hBJQ/);
+    await expect(iframe).toHaveAttribute('src', /^https:\/\/www\.youtube-nocookie\.com\/embed\/z6GkGEwe-8E/);
   });
 
   test('mobile menu is keyboard operable and closes with Escape', async ({ page, isMobile }) => {

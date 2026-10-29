@@ -33,17 +33,17 @@ const en = {
 
   'home.seo.title': 'Abrava Studio: independent mobile game studio',
   'home.seo.description':
-    'Abrava Studio is an independent game studio from Serbia making pixel-art mobile games. Play Leap UP!, out now on Google Play.',
+    'Abrava Studio is an independent game studio from Serbia making pixel-art mobile games. Play Leap UP: Pixel Jump Game, out now on Google Play.',
   'home.eyebrow': 'Independent mobile game studio · Serbia',
   'home.tagline': 'Small studio. Big leaps.',
   'home.lead':
-    'We’re an independent studio from Serbia making pixel-art games for your phone. Our first game, Leap UP!, is out now on Google Play.',
+    'We’re an independent studio from Serbia making pixel-art games for your phone. Our first game, Leap UP: Pixel Jump Game, is out now on Google Play.',
   'home.cta.games': 'Explore our games',
   'home.featured.eyebrow': 'Featured game',
   'home.featured.more': 'About the game',
   'home.studio.heading': 'From Serbia, straight to your pocket',
   'home.studio.text':
-    'Abrava Studio is an independent team making mobile games with pixel art and simple, tactile controls. Leap UP! is our first release, and we’re already working on what comes next.',
+    'Abrava Studio is an independent team making mobile games with pixel art and simple, tactile controls. Leap UP: Pixel Jump Game is our first release, and we’re already working on what comes next.',
   'home.studio.more': 'More about the studio',
   'home.community.heading': 'Join the community',
   'home.community.text':
@@ -79,7 +79,7 @@ const en = {
   'game.gallery.previous': 'Previous screenshot',
   'game.gallery.next': 'Next screenshot',
   'game.gallery.counter': '{n} / {total}',
-  'game.trailer': 'Gameplay video',
+  'game.trailer': 'Trailer',
   'game.trailer.play': 'Play video: {title}',
   'game.trailer.note': 'The video loads from YouTube (youtube-nocookie.com) only after you press play.',
   'game.support': 'Support & privacy',
@@ -97,7 +97,7 @@ const en = {
     'Abrava Studio is an independent game studio from Serbia. We make mobile games with pixel art and simple, tactile controls.',
   'about.make.heading': 'What we make',
   'about.make.text':
-    'Short-session games you can play in a spare minute, then come back to for one more try. Our first release, Leap UP!, is an endless vertical jumper: tilt your phone, bounce from platform to platform and see how high you can climb.',
+    'Short-session games you can play in a spare minute, then come back to for one more try. Our first release is Leap UP: Pixel Jump Game, an endless vertical jumper. Tilt your phone, bounce from platform to platform and see how high you can climb.',
   'about.work.heading': 'How we work',
   'about.work.text':
     'We’re a small team, so we keep each game focused on one core idea and build it step by step. We share progress and hear from players in our Discord community and on YouTube.',
@@ -136,7 +136,7 @@ const en = {
 
   'press.seo.title': 'Press kit | Abrava Studio',
   'press.seo.description':
-    'Press kit for Abrava Studio and Leap UP!: studio facts, game descriptions, logo, icon, key art and screenshots.',
+    'Press kit for Abrava Studio and Leap UP: Pixel Jump Game, with studio facts, game descriptions, logo, icon, key art and screenshots.',
   'press.heading': 'Press kit',
   'press.intro':
     'Facts, descriptions and official images for writing about Abrava Studio and our games. For interviews or anything not covered here, email us.',
@@ -148,7 +148,7 @@ const en = {
   'press.studio.social': 'Community',
   'press.boilerplate.heading': 'About Abrava Studio',
   'press.boilerplate.text':
-    'Abrava Studio is an independent game studio from Serbia that makes mobile games with pixel art and simple, tactile controls. Its first game, Leap UP!, is available on Google Play.',
+    'Abrava Studio is an independent game studio from Serbia that makes mobile games with pixel art and simple, tactile controls. Its first game, Leap UP: Pixel Jump Game, is available on Google Play.',
   'press.game.heading': '{name} fact sheet',
   'press.game.store': 'Store page',
   'press.downloads.heading': 'Downloads',
@@ -205,17 +205,17 @@ const sr: Dictionary = {
 
   'home.seo.title': 'Abrava Studio: nezavisni studio za mobilne igre',
   'home.seo.description':
-    'Abrava Studio je nezavisni studio iz Srbije koji pravi piksel-art igre za mobilne telefone. Igrajte Leap UP!, dostupnu na Google Play-u.',
+    'Abrava Studio je nezavisni studio iz Srbije koji pravi piksel-art igre za mobilne telefone. Igrajte Leap UP: Pixel Jump Game, dostupnu na Google Play-u.',
   'home.eyebrow': 'Nezavisni studio za mobilne igre · Srbija',
   'home.tagline': 'Mali studio. Veliki skokovi.',
   'home.lead':
-    'Mi smo nezavisni studio iz Srbije i pravimo piksel-art igre za mobilne telefone. Naša prva igra, Leap UP!, već je dostupna na Google Play-u.',
+    'Mi smo nezavisni studio iz Srbije i pravimo piksel-art igre za mobilne telefone. Naša prva igra, Leap UP: Pixel Jump Game, već je dostupna na Google Play-u.',
   'home.cta.games': 'Pogledajte naše igre',
   'home.featured.eyebrow': 'Izdvajamo',
   'home.featured.more': 'Više o igri',
   'home.studio.heading': 'Iz Srbije, pravo u vaš džep',
   'home.studio.text':
-    'Abrava Studio je nezavisni tim koji pravi igre za mobilne telefone sa piksel-art grafikom i jednostavnim kontrolama. Leap UP! je naše prvo izdanje, a već radimo na sledećem.',
+    'Abrava Studio je nezavisni tim koji pravi igre za mobilne telefone sa piksel-art grafikom i jednostavnim kontrolama. Leap UP: Pixel Jump Game je naše prvo izdanje, a već radimo na sledećem.',
   'home.studio.more': 'Više o studiju',
   'home.community.heading': 'Pridružite se zajednici',
   'home.community.text':
@@ -251,7 +251,7 @@ const sr: Dictionary = {
   'game.gallery.previous': 'Prethodni snimak ekrana',
   'game.gallery.next': 'Sledeći snimak ekrana',
   'game.gallery.counter': '{n} / {total}',
-  'game.trailer': 'Snimak igranja',
+  'game.trailer': 'Trejler',
   'game.trailer.play': 'Pusti video: {title}',
   'game.trailer.note': 'Video se učitava sa YouTube-a (youtube-nocookie.com) tek kada ga pokrenete.',
   'game.support': 'Podrška i privatnost',
@@ -269,7 +269,7 @@ const sr: Dictionary = {
     'Abrava Studio je nezavisni studio za razvoj igara iz Srbije. Pravimo igre za mobilne telefone sa piksel-art grafikom i jednostavnim kontrolama.',
   'about.make.heading': 'Šta pravimo',
   'about.make.text':
-    'Igre za kratke pauze: igrate ih kada imate minut, a onda se vraćate na još jedan pokušaj. Naše prvo izdanje, Leap UP!, je igra beskrajnog skakanja nagore: nagnite telefon, skačite s platforme na platformu i proverite koliko visoko možete da stignete.',
+    'Igre za kratke pauze: igrate ih kada imate minut, a onda se vraćate na još jedan pokušaj. Naše prvo izdanje je Leap UP: Pixel Jump Game, igra beskrajnog skakanja nagore. Nagnite telefon, skačite s platforme na platformu i proverite koliko visoko možete da stignete.',
   'about.work.heading': 'Kako radimo',
   'about.work.text':
     'Mali smo tim, pa svaku igru gradimo oko jedne osnovne ideje, korak po korak. Napredak delimo sa igračima i slušamo njihove utiske u našoj Discord zajednici i na YouTube-u.',
@@ -308,7 +308,7 @@ const sr: Dictionary = {
 
   'press.seo.title': 'Za medije | Abrava Studio',
   'press.seo.description':
-    'Materijali za medije o studiju Abrava Studio i igri Leap UP!: osnovni podaci, opisi, logo, ikonica, ključna ilustracija i snimci ekrana.',
+    'Materijali za medije o studiju Abrava Studio i igri Leap UP: Pixel Jump Game, sa osnovnim podacima, opisima, logom, ikonicom, ključnom ilustracijom i snimcima ekrana.',
   'press.heading': 'Za medije',
   'press.intro':
     'Osnovni podaci, opisi i zvanične slike za pisanje o studiju Abrava Studio i našim igrama. Za intervjue i sve što ovde ne pronađete, pišite nam.',
@@ -320,7 +320,7 @@ const sr: Dictionary = {
   'press.studio.social': 'Zajednica',
   'press.boilerplate.heading': 'O studiju Abrava Studio',
   'press.boilerplate.text':
-    'Abrava Studio je nezavisni studio za razvoj igara iz Srbije koji pravi igre za mobilne telefone sa piksel-art grafikom i jednostavnim kontrolama. Njegova prva igra, Leap UP!, dostupna je na Google Play-u.',
+    'Abrava Studio je nezavisni studio za razvoj igara iz Srbije koji pravi igre za mobilne telefone sa piksel-art grafikom i jednostavnim kontrolama. Njegova prva igra, Leap UP: Pixel Jump Game, dostupna je na Google Play-u.',
   'press.game.heading': 'Osnovni podaci: {name}',
   'press.game.store': 'Stranica u prodavnici',
   'press.downloads.heading': 'Preuzimanje',

@@ -3,13 +3,13 @@
 Kratka lista koraka do objavljivanja novog sajta, redom. Tehnički detalji su u [DEPLOYMENT.md](DEPLOYMENT.md),
 a odluke i otvorena pitanja u [TASKS.md](TASKS.md) i [DECISIONS.md](DECISIONS.md).
 
-Stanje: **27. 10. 2026.** Kad nešto završiš, štikliraj `[x]` i dopiši datum.
+Stanje: **29. 10. 2026.** Kad nešto završiš, štikliraj `[x]` i dopiši datum.
 
 ## Gde smo stali
 
-- Novi sajt je na grani **`site-v2`**: 2 commita, samo lokalno, **nije push-ovan**.
+- Novi sajt je na grani **`site-v2`**, push-ovan na GitHub (29.10.).
 - Živi sajt (abravastudio.com, GitHub Pages sa grane `main`) **nije diran**.
-- Tag za vraćanje na stari sajt: `legacy-gh-pages` (`6fa1d7e`). Za sada postoji samo lokalno.
+- Tag za vraćanje na stari sajt: `legacy-gh-pages` (`6fa1d7e`), push-ovan na GitHub.
 - Sve automatske provere prolaze (`npm run verify`).
 
 > ⚠️ **Ne spajaj (merge) `site-v2` u `main` pre prebacivanja DNS-a.** GitHub Pages objavljuje `main`, pa bi se
@@ -19,18 +19,20 @@ Stanje: **27. 10. 2026.** Kad nešto završiš, štikliraj `[x]` i dopiši datum
 
 ## 1. Lokalni pregled (ti)
 
-- [ ] `npm run preview` → http://127.0.0.1:8788. Prođi kroz sve stranice na oba jezika.
+- [x] `npm run preview` → http://127.0.0.1:8788. Prođi kroz sve stranice na oba jezika. (29.10.)
 - [ ] Na telefonu: `npm run dev -- --host`, pa otvori „Network” adresu iz terminala.
-- [ ] `npm run verify` mora da prođe bez grešaka.
+- [x] `npm run verify` mora da prođe bez grešaka. (29.10.)
 
 ## 2. Odluke i pregled sadržaja (ti)
 
-- [ ] Tekstovi EN i SR, posebno slogan „Small studio. Big leaps.” i odeljak „How we work / Kako radimo”
+Odobreno 29.10.2026 posle pregleda preview-a („sve izgleda dobro”): ostaju trenutna rešenja.
+
+- [x] Tekstovi EN i SR, posebno slogan „Small studio. Big leaps.” i odeljak „How we work / Kako radimo”
       (`src/i18n/ui.ts`, `src/content/games/leap-up.yaml`)
-- [ ] Boja „STUDIO” u logu: magenta (stari sajt) ili crna (PNG logo)?
-- [ ] Srpski Google Play bedž: zvanični ćirilični (sada) ili engleski i na srpskim stranicama?
-- [ ] Materijali za medije: odobriti slike za preuzimanje i napomenu o korišćenju
-- [ ] Favicon: zeleno pikselizovano „A” iz loga
+- [x] Boja „STUDIO” u logu: magenta (stari sajt) ili crna (PNG logo)?
+- [x] Srpski Google Play bedž: zvanični ćirilični (sada) ili engleski i na srpskim stranicama?
+- [x] Materijali za medije: odobriti slike za preuzimanje i napomenu o korišćenju
+- [x] Favicon: zeleno pikselizovano „A” iz loga
 
 ## 3. Podaci koji još fale (ti)
 
@@ -41,12 +43,12 @@ Stanje: **27. 10. 2026.** Kad nešto završiš, štikliraj `[x]` i dopiši datum
 
 ## 4. Email (ti)
 
-- [ ] Proveri da **contact@abravastudio.com** stvarno prima poštu: pošalji sebi test poruku
-      (Namecheap email forwarding).
+- [x] Proveri da **contact@abravastudio.com** stvarno prima poštu: pošalji sebi test poruku
+      (Namecheap email forwarding). Potvrđeno 29.10.2026: i `contact@` i `info@` prosleđuju poštu.
 
 ## 5. Push na GitHub (ja, uz tvoje odobrenje)
 
-- [ ] Push grane `site-v2` i taga `legacy-gh-pages`. Ne utiče na živi sajt.
+- [x] Push grane `site-v2` i taga `legacy-gh-pages`. Ne utiče na živi sajt. (29.10.)
 
 ## 6. Cloudflare: jednokratno podešavanje (ti, u dashboard-u)
 

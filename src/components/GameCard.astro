@@ -57,7 +57,8 @@ const href = pathFor({ key: 'game', slug: game.id }, locale);
     display: block;
     aspect-ratio: 1024 / 500;
     overflow: hidden;
-    background: var(--c-brick-dark);
+    /* The key art's own sky, so the contain-fit art below blends into its column. */
+    background: var(--c-sky);
   }
 
   .game-card__art img {
@@ -122,6 +123,11 @@ const href = pathFor({ key: 'game', slug: game.id }, locale);
     .game-card__art {
       aspect-ratio: auto;
       min-height: 100%;
+    }
+
+    /* The column is taller than the art here; cover would crop the title off its right edge. */
+    .game-card__art img {
+      object-fit: contain;
     }
   }
 </style>

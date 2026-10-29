@@ -9,16 +9,21 @@ The ordered pre-launch steps for the studio are in [GO_LIVE.md](GO_LIVE.md) (Ser
 - ✅ Astro 7 static site, TypeScript strict, route table, EN (`/`) + SR (`/sr/`)
 - ✅ Pages: home, games, Leap UP!, about, contact, press, privacy, 404 (bilingual), unsubscribe (legacy)
 - ✅ Leap UP! content verified against the live Play listing (title, description, PEGI 3, Android only, privacy URL, trailer)
+- ✅ Leap UP! re-synced with the Play listing for version 1.1.0 (2026-10-29): store title "Leap UP: Pixel Jump Game",
+  new short and full description (six worlds, power-ups, record flag, fair play), new feature graphic + OG card,
+  the 8 store screenshots (replacing 6 older ones), new official trailer `z6GkGEwe-8E` and its poster.
+  The game card now shows the whole key art in the wide layout (contain on the key art's sky color), so the new
+  art's title isn't cropped
 - ✅ Official Google Play badges (EN; official SR badge is Cyrillic, see DECISIONS.md D8), UTM-tagged links
 - ✅ No App Store button anywhere (no iOS release), and a test enforces it
 - ✅ Screenshot gallery with keyboard-accessible lightbox; click-to-load YouTube (nocookie)
 - ✅ SEO: titles/descriptions, canonical, hreflang, sitemap, robots, OG images, JSON-LD
 - ✅ Security headers + strict CSP, legacy redirects, real 404s, `app-ads.txt` preserved byte-for-byte
-- ✅ Tests: 18 unit, 46 e2e (+2 device-specific skips), axe on every page, link check, live store-link check
+- ✅ Tests: 18 unit, 50 e2e (+2 device-specific skips), axe on every page, link check, live store-link check
 - ✅ CI workflow (verification only, never deploys)
 - ✅ Docs: README, ARCHITECTURE, DECISIONS, DEPLOYMENT, SECURITY, SEO_CHECKLIST, PROJECT_PLAN, AGENTS
 
-## Last verification run (2026-10-27, local, Windows, Node 24.21)
+## Last verification run (2026-10-29, local, Windows, after the Leap UP! 1.1.0 content sync)
 
 | Check | Result |
 | --- | --- |
@@ -26,12 +31,14 @@ The ordered pre-launch steps for the studio are in [GO_LIVE.md](GO_LIVE.md) (Ser
 | `npm run lint` | clean |
 | `npm test` | 18/18 passed |
 | `npm run build` | 16 pages + sitemap + robots |
-| `npm run test:links` | 95 links, 0 broken |
-| `npm run test:e2e` | 46 passed, 2 skipped (mobile-only / desktop-only checks) |
-| `npm run check:store-links` | 5/5 live, Play listing developer = Abrava Studio |
-| Horizontal overflow at 360 / 768 / 1280 px | none on all 15 pages |
-| Lighthouse (local) | 99–100 on all categories; see SEO_CHECKLIST.md |
-| `npm audit` | 0 vulnerabilities |
+| `npm run test:links` | 108 links, 0 broken |
+| `npm run test:e2e` | 50 passed, 2 skipped (mobile-only / desktop-only checks) |
+| `npm run check:store-links` | 6/6 live, Play listing developer = Abrava Studio |
+| Visual check (local preview) | game page EN 1440 px + SR 360/390 px, home 1440 px, games 1440/900 px: key art, cards, gallery, trailer poster OK |
+| Note | one run failed all unit files with `reading 'config'` right after the shell's drive letter changed `e:` → `E:` (Vitest on Windows); rerun from `E:` passed |
+| Horizontal overflow at 360 / 768 / 1280 px | none on all 15 pages (2026-10-27, not re-run) |
+| Lighthouse (local) | 99–100 on all categories (2026-10-27, not re-run); see SEO_CHECKLIST.md |
+| `npm audit` | 0 vulnerabilities (2026-10-27, not re-run) |
 
 **Not verified yet:** behaviour on a real Cloudflare deployment (preview or production), real devices,
 Search Console, Cloudflare Web Analytics (needs a token).
@@ -40,7 +47,10 @@ Search Console, Cloudflare Web Analytics (needs a token).
 
 - 🟡 All copy, EN and SR: `src/i18n/ui.ts`, `src/content/games/leap-up.yaml`, privacy pages.
   "How we work" on About and the hero tagline "Small studio. Big leaps." are proposals.
-- 🟡 Press kit: approve the usage note and the downloadable items (logo, icon, key art, 6 screenshots)
+- 🟡 Press kit: approve the usage note and the downloadable items (logo, icon, key art, 8 screenshots)
+- ✅ Game name: "Leap UP: Pixel Jump Game" is the official name (studio decision, 2026-10-29). Titles, cards,
+  breadcrumbs and first mentions use it; running text uses the short "Leap UP" like the store description. The URL
+  stays `/games/leap-up/`.
 - 🟡 Wordmark color: magenta "STUDIO" (site) vs black "STUDIO" (PNG logo). Which is canonical? (DECISIONS.md D9)
 - 🟡 Serbian Play badge: official Cyrillic badge, or the English badge on Serbian pages? (D8)
 - 🟡 Favicon: the lime pixel "A" derived from the wordmark
@@ -59,7 +69,8 @@ Shown as placeholders on staging, hidden in production (`src/data/studio.ts`):
 
 ## Studio actions ⬜
 
-- ⬜ Confirm `contact@abravastudio.com` forwarding exists (Namecheap email forwarding: MX `eforward*`)
+- ✅ Email forwarding works for both `contact@` and `info@abravastudio.com` (confirmed by the studio, 2026-10-29;
+  the Play description's `info@` is fine)
 - ⬜ Approve pushing `site-v2` to GitHub
 - ⬜ Connect the repo in Cloudflare (DEPLOYMENT.md → one-time setup); optionally create a Web Analytics token
 - ⬜ Approve the production cutover (DEPLOYMENT.md → cutover runbook)

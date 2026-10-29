@@ -26,12 +26,12 @@ describe('UI dictionaries', () => {
   });
 
   it('keep official names untranslated', () => {
-    expect(sr['home.lead']).toContain('Leap UP!');
+    expect(sr['home.lead']).toContain('Leap UP: Pixel Jump Game');
     expect(sr['site.name']).toBe('Abrava Studio');
   });
 
   it('formats tokens and leaves unknown ones visible', () => {
     expect(format('{a} and {b}', { a: 1 })).toBe('1 and {b}');
-    expect(useTranslations('sr')('games.view', { name: 'Leap UP!' })).toBe('Pogledajte Leap UP!');
+    expect(useTranslations('sr')('games.view', { name: 'Leap UP: Pixel Jump Game' })).toBe('Pogledajte Leap UP: Pixel Jump Game');
   });
 });
