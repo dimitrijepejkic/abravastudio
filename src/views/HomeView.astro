@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import discordIcon from '@/assets/community/discord.webp';
+import instagramIcon from '@/assets/community/instagram.png';
 import tiktokIcon from '@/assets/community/tiktok.png';
 import youtubeIcon from '@/assets/community/youtube.png';
 import GameCard from '@/components/GameCard.astro';
@@ -114,6 +115,11 @@ const platforms = [...new Set(games.flatMap((game) => availableStores(game).map(
       <li class="card card--interactive community__card">
         <Image src={tiktokIcon} alt="" width={56} height={56} />
         <a class="stretched-link" href={studio.social.tiktok} rel="noopener">{t('home.community.tiktok')}</a>
+        <span class="muted">@abravastudio</span>
+      </li>
+      <li class="card card--interactive community__card">
+        <Image src={instagramIcon} alt="" width={56} height={56} densities={[1, 2]} />
+        <a class="stretched-link" href={studio.social.instagram} rel="noopener">{t('home.community.instagram')}</a>
         <span class="muted">@abravastudio</span>
       </li>
     </ul>
@@ -275,15 +281,24 @@ const platforms = [...new Set(games.flatMap((game) => availableStores(game).map(
   .community__grid {
     display: grid;
     gap: var(--space-5);
-    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Four channels: two by two, so no card is left alone on a row. */
+  @media (min-width: 40rem) {
+    .community__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 
   .community__card {
     display: grid;
-    grid-template-columns: auto 1fr;
+    /* Fixed icon column: a long handle must wrap, not squeeze the icon. */
+    grid-template-columns: 56px minmax(0, 1fr);
     grid-template-rows: auto auto;
     column-gap: var(--space-4);
     align-items: center;
+    overflow-wrap: anywhere;
   }
 
   .community__card img {

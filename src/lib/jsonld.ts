@@ -26,7 +26,7 @@ export function organizationLd(logoUrl: string): JsonLd {
     logo: absoluteUrl(logoUrl),
     email: studio.email,
     address: { '@type': 'PostalAddress', addressCountry: studio.countryCode },
-    sameAs: [studio.social.youtube, studio.social.tiktok, studio.social.googlePlayDeveloper],
+    sameAs: [studio.social.youtube, studio.social.tiktok, studio.social.instagram, studio.social.googlePlayDeveloper],
   };
 }
 

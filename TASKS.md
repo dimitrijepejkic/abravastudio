@@ -62,6 +62,7 @@ Shown as placeholders on staging, hidden in production (`src/data/studio.ts`):
 - ✅ Team: Dimitrije Pejkić (Founder / Osnivač), Aleksa Dinić (Co-founder / Suosnivač)
 - ✅ Upcoming project: shown as an unnamed "A new project / Novi projekat, in development". Add the title when it's announced
 - ✅ TikTok: https://www.tiktok.com/@abravastudio
+- ✅ Instagram: https://www.instagram.com/abravastudio/ (link from the studio, 2026-10-29; official glyph from Wikimedia Commons, public domain)
 - ✅ Contact email: `contact@abravastudio.com`
 - ⏸ Founding year: intentionally not published for now (studio decision)
 - ⬜ Legal name and registered address (privacy policy data controller)

@@ -35,14 +35,15 @@ export const studio = {
     title: { en: 'A new project', sr: 'Novi projekat' },
     status: { en: 'In development', sr: 'U razvoju' },
     teaser: {
-      en: 'We’re already working on our next game. We’ll share more soon: follow us on Discord, YouTube or TikTok to hear about it first.',
-      sr: 'Već radimo na sledećoj igri. Uskoro ćemo otkriti više, a prvi ćete saznati ako nas pratite na Discordu, YouTube-u ili TikToku.',
+      en: 'We’re already working on our next game. We’ll share more soon: follow us on Discord, YouTube, TikTok or Instagram to hear about it first.',
+      sr: 'Već radimo na sledećoj igri. Uskoro ćemo otkriti više, a prvi ćete saznati ako nas pratite na Discordu, YouTube-u, TikToku ili Instagramu.',
     },
   } as UpcomingProject | null,
   social: {
     discord: 'https://discord.gg/Pe43a2wpKr',
     youtube: 'https://www.youtube.com/@AbravaStudio',
     tiktok: 'https://www.tiktok.com/@abravastudio',
+    instagram: 'https://www.instagram.com/abravastudio/',
     googlePlayDeveloper: 'https://play.google.com/store/apps/dev?id=5315623981540393111',
   },
 } as const;

@@ -111,7 +111,12 @@ test.describe('studio content', () => {
   test('home shows the unnamed upcoming project and every community channel', async ({ page }) => {
     await page.goto('/');
     await expect(page.getByRole('heading', { name: 'A new project' })).toBeVisible();
-    for (const href of ['https://discord.gg/Pe43a2wpKr', 'https://www.youtube.com/@AbravaStudio', 'https://www.tiktok.com/@abravastudio']) {
+    for (const href of [
+      'https://discord.gg/Pe43a2wpKr',
+      'https://www.youtube.com/@AbravaStudio',
+      'https://www.tiktok.com/@abravastudio',
+      'https://www.instagram.com/abravastudio/',
+    ]) {
       await expect(page.locator(`main a[href="${href}"]`)).toHaveCount(1);
       await expect(page.locator(`footer a[href="${href}"]`)).toHaveCount(1);
     }

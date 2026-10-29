@@ -47,10 +47,11 @@ const en = {
   'home.studio.more': 'More about the studio',
   'home.community.heading': 'Join the community',
   'home.community.text':
-    'Chat with us and other players on Discord, and follow along on YouTube and TikTok.',
+    'Chat with us and other players on Discord, and follow along on YouTube, TikTok and Instagram.',
   'home.community.discord': 'Join our Discord',
   'home.community.youtube': 'Watch on YouTube',
   'home.community.tiktok': 'Follow on TikTok',
+  'home.community.instagram': 'Follow on Instagram',
   'home.upcoming.heading': 'Coming next',
   'home.contact.heading': 'Let’s make something together',
   'home.contact.text':
@@ -219,10 +220,11 @@ const sr: Dictionary = {
   'home.studio.more': 'Više o studiju',
   'home.community.heading': 'Pridružite se zajednici',
   'home.community.text':
-    'Družite se sa nama i drugim igračima na Discordu, a novosti pratite na YouTube-u i TikToku.',
+    'Družite se sa nama i drugim igračima na Discordu, a novosti pratite na YouTube-u, TikToku i Instagramu.',
   'home.community.discord': 'Pridružite se na Discordu',
   'home.community.youtube': 'Gledajte na YouTube-u',
   'home.community.tiktok': 'Pratite nas na TikToku',
+  'home.community.instagram': 'Pratite nas na Instagramu',
   'home.upcoming.heading': 'Uskoro',
   'home.contact.heading': 'Hajde da sarađujemo',
   'home.contact.text':
